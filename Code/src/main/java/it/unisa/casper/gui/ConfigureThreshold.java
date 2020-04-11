@@ -3,6 +3,7 @@ package it.unisa.casper.gui;
 import com.intellij.openapi.ui.ComboBox;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
+import it.unisa.casper.analysis.history_analysis_utility.HistoryAnalysisStartup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,6 +11,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -202,7 +204,14 @@ public class ConfigureThreshold extends DialogWrapper {
         algorith.setSelectedItem(algoritmi);
         scelta.add(app);
         JPanel sotto = new JPanel();
-        sotto.setLayout(new GridLayout(0, 2, 0, 0));
+
+
+        //CODICE DEL POVERO TIROCINANTE
+        sotto.setLayout(new GridLayout(0, 3, 0, 0));
+        JPanel pannelloBottonePython = new JPanel(new FlowLayout());
+        pannelloBottonePython.add(creaBottonePython(contentPane));
+        sotto.add(pannelloBottonePython);
+        //FINE CODICE TIROCINANTE
 
         sotto.add(scelta);
 
@@ -468,5 +477,29 @@ public class ConfigureThreshold extends DialogWrapper {
         standard.setSelected(false);
     }
 
+    //crea il bottone per l'inserimento del path di Python.exe
+    private JButton creaBottonePython(JPanel contentPane){
+
+        JButton pythonPath = new JButton();
+        pythonPath.setText("Add Python.exe path");
+
+        pythonPath.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooser = new JFileChooser();
+                // FileNameExtensionFilter filter = new FileNameExtensionFilter("gif");
+                //chooser.setFileFilter(filter);
+                int returnVal = chooser.showOpenDialog(contentPane);
+                if(returnVal == JFileChooser.APPROVE_OPTION){
+                    System.out.println("FILE SELEZIONATO: "+chooser.getSelectedFile().getAbsolutePath());
+                    String path = chooser.getSelectedFile().getAbsolutePath();
+
+                    HistoryAnalysisStartup startup = new HistoryAnalysisStartup();
+                    startup.savePythonExePath(path);
+                }
+            }
+        });
+        return pythonPath;
+    }
 
 }

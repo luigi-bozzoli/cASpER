@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="ProgettiTest.db">
-  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.15">
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.17">
     <root id="1">
       <ServerVersion>3.25.1</ServerVersion>
     </root>
     <schema id="2" parent="1" name="main">
       <Current>1</Current>
-      <Visible>1</Visible>
     </schema>
     <collation id="3" parent="1" name="BINARY"/>
     <collation id="4" parent="1" name="NOCASE"/>
@@ -61,7 +60,6 @@
     <index id="27" parent="6" name="sqlite_autoindex_ClassBean_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>fullQualifiedName</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="28" parent="6">
@@ -110,7 +108,6 @@
       <ColNames>classBeanFullQualifiedName
 codeSmellFullQualifiedName
 algorithmUsed</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="37" parent="7">
@@ -162,7 +159,6 @@ algorithmUsed</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>classBeanFullQualifiedName
 instanceVariableBeanFullQualifiedName</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="45" parent="8">
@@ -197,7 +193,6 @@ instanceVariableBeanFullQualifiedName</ColNames>
     <index id="50" parent="9" name="sqlite_autoindex_CodeSmell_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>fullQualifiedName</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="51" parent="9">
@@ -221,7 +216,6 @@ instanceVariableBeanFullQualifiedName</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>indexId
 indice</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="56" parent="10">
@@ -252,7 +246,6 @@ indice</ColNames>
     <index id="61" parent="11" name="sqlite_autoindex_InstanceVariableBean_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>fullQualifiedName</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="62" parent="11">
@@ -274,7 +267,6 @@ indice</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>methodBeanFullQualifiedName
 instanceVariableBeanFullQualifiedName</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="66" parent="12">
@@ -333,7 +325,6 @@ instanceVariableBeanFullQualifiedName</ColNames>
     <index id="76" parent="13" name="sqlite_autoindex_MethodBean_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>fullQualifiedName</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="77" parent="13">
@@ -362,7 +353,6 @@ instanceVariableBeanFullQualifiedName</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>methodCallerFullQualifiedName
 methodCalledFullQualifiedName</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="82" parent="14">
@@ -412,7 +402,6 @@ methodCalledFullQualifiedName</ColNames>
       <ColNames>methodBeanFullQualifiedName
 codeSmellFullQualifiedName
 algorithmUsed</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="91" parent="15">
@@ -462,7 +451,6 @@ algorithmUsed</ColNames>
     <index id="98" parent="16" name="sqlite_autoindex_PackageBean_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>fullQualifiedName</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="99" parent="16">
@@ -493,7 +481,6 @@ algorithmUsed</ColNames>
       <ColNames>packageBeanFullQualifiedName
 codeSmellFullQualifiedName
 algorithmUsed</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="105" parent="17">
@@ -549,7 +536,6 @@ algorithmUsed</ColNames>
       <ColNames>methodBeanFullQualifiedName
 parameterClassFullQualifiedName
 classBeanFullQualifiedName</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="114" parent="18">

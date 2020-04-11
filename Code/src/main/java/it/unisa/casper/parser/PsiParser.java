@@ -8,6 +8,7 @@ import it.unisa.casper.analysis.code_smell.BlobCodeSmell;
 import it.unisa.casper.analysis.code_smell.FeatureEnvyCodeSmell;
 import it.unisa.casper.analysis.code_smell.MisplacedClassCodeSmell;
 import it.unisa.casper.analysis.code_smell.PromiscuousPackageCodeSmell;
+import it.unisa.casper.analysis.code_smell_detection.blob.HistoryBlobStrategy;
 import it.unisa.casper.analysis.code_smell_detection.blob.StructuralBlobStrategy;
 import it.unisa.casper.analysis.code_smell_detection.blob.TextualBlobStrategy;
 import it.unisa.casper.analysis.code_smell_detection.feature_envy.StructuralFeatureEnvyStrategy;
@@ -16,6 +17,7 @@ import it.unisa.casper.analysis.code_smell_detection.misplaced_class.StructuralM
 import it.unisa.casper.analysis.code_smell_detection.misplaced_class.TextualMisplacedClassStrategy;
 import it.unisa.casper.analysis.code_smell_detection.promiscuous_package.StructuralPromiscuousPackageStrategy;
 import it.unisa.casper.analysis.code_smell_detection.promiscuous_package.TextualPromiscuousPackageStrategy;
+import it.unisa.casper.analysis.history_analysis_utility.AnalyzerThread;
 import it.unisa.casper.storage.beans.*;
 
 import java.io.BufferedReader;
@@ -30,11 +32,14 @@ public class PsiParser implements Parser {
     private Project project;
     private final List<PackageBean> projectPackages;
     private static String path;
+    //Lista di threads
+    private List<Thread> threadList;
 
     public PsiParser(Project project) {
         this.project = project;
         path = project.getBasePath();
         projectPackages = new ArrayList<PackageBean>();
+        threadList = new ArrayList<>();
     }
 
     @Override
@@ -90,6 +95,12 @@ public class PsiParser implements Parser {
                     }
                 }
             }
+
+            //join sui thread
+            for(Thread t : threadList){
+                t.join();
+            }
+
             return projectPackages;
         } catch (Exception e) {
             throw new ParsingException();
@@ -107,6 +118,18 @@ public class PsiParser implements Parser {
     }
 
     private void classAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, ClassBean classBean) {
+        //ANALISI STORICA
+        System.out.println("PRE ANALISI");
+        HistoryBlobStrategy historyBlobStrategy = new HistoryBlobStrategy();
+        BlobCodeSmell hBlobCodeSmell = new BlobCodeSmell(historyBlobStrategy, "History");
+        Thread t = new Thread(new AnalyzerThread(classBean, hBlobCodeSmell));
+        threadList.add(t);
+        t.start();
+
+
+       // classBean.isAffected(hBlobCodeSmell);
+
+
         TextualBlobStrategy textualBlobStrategy = new TextualBlobStrategy(coseno.get("cosenoBlob"));
         BlobCodeSmell tBlobCodeSmell = new BlobCodeSmell(textualBlobStrategy, "Textual");
         TextualMisplacedClassStrategy textualMisplacedClassStrategy = new TextualMisplacedClassStrategy(projectPackages, coseno.get("cosenoMisplaced"));

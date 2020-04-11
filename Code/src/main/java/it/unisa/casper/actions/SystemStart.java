@@ -5,6 +5,8 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import it.unisa.casper.analysis.history_analysis_utility.HistoryAnalysisStartup;
+import it.unisa.casper.analysis.history_analysis_utility.PythonExeSingleton;
 import it.unisa.casper.gui.CheckProjectPage;
 import it.unisa.casper.parser.ParsingException;
 import it.unisa.casper.parser.PsiParser;
@@ -36,6 +38,12 @@ public class SystemStart {
         
         File dir = new File(nameDir);
         dir.mkdir();
+
+        //crea i file .py per la detection dei code smell con analisi storica
+        HistoryAnalysisStartup startup = new HistoryAnalysisStartup(nameDir);
+        startup.writeScripts();
+        //crea singleton per il path di python.exe
+        PythonExeSingleton singleton = PythonExeSingleton.getIstance(nameDir);
 
         try {
             FileReader f = new FileReader(nameDir + File.separator + "threshold.txt");
