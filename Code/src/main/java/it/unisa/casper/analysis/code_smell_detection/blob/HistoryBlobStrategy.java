@@ -40,7 +40,7 @@ public class HistoryBlobStrategy implements ClassSmellDetectionStrategy {
         String line = "";
 
         try {
-            Process p = Runtime.getRuntime().exec( pathToExe + " " + "C:\\Users\\faded\\PycharmProjects\\CodeSmellsDetection\\blob.py");
+            Process p = Runtime.getRuntime().exec( pathToExe + " " + PATH_TO_BLOB);
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
 
@@ -57,16 +57,11 @@ public class HistoryBlobStrategy implements ClassSmellDetectionStrategy {
             e.printStackTrace();
         }
 
-        System.out.println(line);
 
         //elaboro il risultato
         if(getResult(line)) {
-            System.out.println("VERO");
-            System.out.println("RISULTATO: " + this.threshold);
             return true;
         }else {
-            System.out.println("FALSO");
-            System.out.println("RISULTATO: " + this.threshold);
             return false;
         }
     }
@@ -85,6 +80,12 @@ public class HistoryBlobStrategy implements ClassSmellDetectionStrategy {
     }
 
     private boolean getResult(String result){
+
+        if(result == null){
+            this.threshold = 0;
+            return false;
+        }
+
         String[] list = null;
         list = result.split(",");
         if(list[0].equalsIgnoreCase("true")){

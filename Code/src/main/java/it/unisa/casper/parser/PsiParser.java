@@ -11,6 +11,7 @@ import it.unisa.casper.analysis.code_smell.PromiscuousPackageCodeSmell;
 import it.unisa.casper.analysis.code_smell_detection.blob.HistoryBlobStrategy;
 import it.unisa.casper.analysis.code_smell_detection.blob.StructuralBlobStrategy;
 import it.unisa.casper.analysis.code_smell_detection.blob.TextualBlobStrategy;
+import it.unisa.casper.analysis.code_smell_detection.feature_envy.HistoryFeatureEnvyStrategy;
 import it.unisa.casper.analysis.code_smell_detection.feature_envy.StructuralFeatureEnvyStrategy;
 import it.unisa.casper.analysis.code_smell_detection.feature_envy.TextualFeatureEnvyStrategy;
 import it.unisa.casper.analysis.code_smell_detection.misplaced_class.StructuralMisplacedClassStrategy;
@@ -108,6 +109,12 @@ public class PsiParser implements Parser {
     }
 
     private void methosAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, MethodBean methodBean) {
+        //ANALISI STORICA
+        System.out.println("PRE ANALISI");
+        HistoryFeatureEnvyStrategy historyFeatureEnvyStrategy = new HistoryFeatureEnvyStrategy(projectPackages);
+        FeatureEnvyCodeSmell hFeatureEnvyCodeSmell = new FeatureEnvyCodeSmell(historyFeatureEnvyStrategy, "History");
+        methodBean.isAffected(hFeatureEnvyCodeSmell);
+
         TextualFeatureEnvyStrategy textualFeatureEnvyStrategy = new TextualFeatureEnvyStrategy(projectPackages, coseno.get("cosenoFeature"));
         FeatureEnvyCodeSmell tFeatureEnvyCodeSmell = new FeatureEnvyCodeSmell(textualFeatureEnvyStrategy, "Textual");
         methodBean.isAffected(tFeatureEnvyCodeSmell);
@@ -119,7 +126,6 @@ public class PsiParser implements Parser {
 
     private void classAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, ClassBean classBean) {
         //ANALISI STORICA
-        System.out.println("PRE ANALISI");
         HistoryBlobStrategy historyBlobStrategy = new HistoryBlobStrategy();
         BlobCodeSmell hBlobCodeSmell = new BlobCodeSmell(historyBlobStrategy, "History");
         Thread t = new Thread(new AnalyzerThread(classBean, hBlobCodeSmell));

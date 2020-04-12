@@ -1,5 +1,7 @@
 package it.unisa.casper.analysis.history_analysis_utility;
 
+import it.unisa.casper.analysis.code_smell.FeatureEnvyCodeSmell;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -23,7 +25,7 @@ public class HistoryAnalysisStartup {
     public void writeScripts(){
         //crea script per la detection del blob
         createFile("blob.py", BLOB_DETECTION);
-        createFile("prova.py", "CORONAVIRUS TEST COLPA DEI CINESI aggiunta ora");
+        createFile("FeatureEnvy.py", FEATURE_ENVY_DETECTION);
     }
 
     private void createFile(String fileName, String fileText){
@@ -54,6 +56,79 @@ public class HistoryAnalysisStartup {
     public String getDir() {
         return dir;
     }
+
+    private static final String FEATURE_ENVY_DETECTION = "from pydriller import RepositoryMining\n" +
+            "\n" +
+            "# dizionario che contiene le coppie (CLASSE , #COMMIT)\n" +
+            "dizionario = {}\n" +
+            "# commit totali della classe con il metodo invidiato\n" +
+            "totalCommit = 0\n" +
+            "# classe che invidia il metodo\n" +
+            "enviousClass = None\n" +
+            "\n" +
+            "\n" +
+            "def contaClassiJava(commit):\n" +
+            "    count = 0\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        if 'java' in modifiedFile.filename:\n" +
+            "            count = count + 1\n" +
+            "    return count\n" +
+            "\n" +
+            "\n" +
+            "def controllaClasseInvidiose(commit):\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        if '.java' in modifiedFile.filename and not classe == modifiedFile.filename:\n" +
+            "            #se ho modificato almeno un metodo\n" +
+            "            if len(modifiedFile.changed_methods) != 0:\n" +
+            "                if modifiedFile.filename in dizionario:\n" +
+            "                    dizionario[modifiedFile.filename] = dizionario[modifiedFile.filename] + 1\n" +
+            "                else:\n" +
+            "                    dizionario[modifiedFile.filename] = 1\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "# leggo il metodo da analizzare\n" +
+            "# getEmail\n" +
+            "metodo = input()\n" +
+            "\n" +
+            "# leggo la classe del metodo da analizzare\n" +
+            "#ClienteBean\n" +
+            "classe = input()\n" +
+            "\n" +
+            "#leggo il path della repo\n" +
+            "pathToRepo = input()\n" +
+            "\n" +
+            "# MAIN\n" +
+            "for commit in RepositoryMining(pathToRepo,\n" +
+            "                               only_modifications_with_file_types=['.java']).traverse_commits():\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        if classe == modifiedFile.filename:\n" +
+            "            #metodi modificati della classe analizzata\n" +
+            "            for method in modifiedFile.changed_methods:\n" +
+            "                #verifico se il metodo è stato modificato\n" +
+            "                if metodo in method.name:\n" +
+            "                    #conto il num. di classi java modificate nel commit in analisi\n" +
+            "                    numClassiJava = contaClassiJava(commit)\n" +
+            "                    # il metodo è stato modificato insieme a metodi della classe stessa\n" +
+            "                    if numClassiJava == 1:\n" +
+            "                        totalCommit = totalCommit + 1\n" +
+            "                    #il metodo è stato modificato insieme a metodi di un'altra classe\n" +
+            "                    elif numClassiJava == 2:\n" +
+            "                        controllaClasseInvidiose(commit)\n" +
+            "\n" +
+            "totalCommitIncrementato = totalCommit + (totalCommit * 80 / 100)\n" +
+            "max = 0;\n" +
+            "for x in dizionario:\n" +
+            "    if dizionario[x] >= totalCommitIncrementato and dizionario[x] > max:\n" +
+            "        max = dizionario[x]\n" +
+            "        enviousClass = x\n" +
+            "\n" +
+            "if(enviousClass is not None):\n" +
+            "    print('true,' + enviousClass + ',' + str(max))\n" +
+            "else:\n" +
+            "    print('false,' + str(0))";
 
     private static final String BLOB_DETECTION="from pydriller import RepositoryMining\n" +
             "from pydriller import ModificationType\n" +
