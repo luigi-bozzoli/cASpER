@@ -26,6 +26,9 @@ public class ClassBean implements ComparableBean, Comparable {
     private List<CodeSmell> affectedSmell; // lista di code smell presenti nella classe
     private double similarity; //somiglianza generata durante l'analisi con altre classi
 
+    private List<ClassBean> shotgunSurgeryHittedClasses; //lista delle classi colpite dallo shotgun surgery
+    private MethodBeanList shotgunSurgeryHittedMethods; //lista dei metodi colpiti dallo shotgun surgery
+
     /**
      * Costruttore
      *
@@ -62,6 +65,26 @@ public class ClassBean implements ComparableBean, Comparable {
     }
 
     ;
+
+    //-------------------------
+    public List<ClassBean> getShotgunSurgeryHittedClasses() {
+        return shotgunSurgeryHittedClasses;
+    }
+
+    public void setShotgunSurgeryHittedClasses(List<ClassBean> shotgunSurgeryHittedClasses) {
+        this.shotgunSurgeryHittedClasses = shotgunSurgeryHittedClasses;
+    }
+
+    public List<MethodBean> getShotgunSurgeryHittedMethods() {
+        if (shotgunSurgeryHittedMethods == null) return null;
+        return shotgunSurgeryHittedMethods.getList();
+    }
+
+    public void setShotgunSurgeryHittedMethods(MethodBean bean) {
+        if (shotgunSurgeryHittedMethods != null && shotgunSurgeryHittedMethods.getList() != null) shotgunSurgeryHittedMethods.getList().add(bean);
+    }
+
+    //---------------------------------------------------------------
 
     /***
      * getter

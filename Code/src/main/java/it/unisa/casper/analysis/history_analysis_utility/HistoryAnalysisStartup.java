@@ -26,6 +26,7 @@ public class HistoryAnalysisStartup {
         //crea script per la detection del blob
         createFile("blob.py", BLOB_DETECTION);
         createFile("FeatureEnvy.py", FEATURE_ENVY_DETECTION);
+        createFile("ShotgunSurgery.py", SHOTGUN_SURGERY_DETECTION);
     }
 
     private void createFile(String fileName, String fileText){
@@ -56,6 +57,93 @@ public class HistoryAnalysisStartup {
     public String getDir() {
         return dir;
     }
+
+    private static final String SHOTGUN_SURGERY_DETECTION = "from pydriller import RepositoryMining\n" +
+            "\n" +
+            "# commit con più classi affette\n" +
+            "affectedCommit = None\n" +
+            "\n" +
+            "#restiruisce True se nel commit tutte le classi java hanno almeno un metodo modificato, false altrimenti\n" +
+            "def checkMethods(commit):\n" +
+            "    boolean = True\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        if '.java' in modifiedFile.filename:\n" +
+            "            if len(modifiedFile.changed_methods) != 0:\n" +
+            "                boolean = boolean and True\n" +
+            "            else:\n" +
+            "                boolean = boolean and False\n" +
+            "    return boolean\n" +
+            "\n" +
+            "def contaClassiJava(commit):\n" +
+            "    count = 0\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        if 'java' in modifiedFile.filename:\n" +
+            "            count = count + 1\n" +
+            "    return count\n" +
+            "\n" +
+            "# restituisce True se il numro di classi modificate nel commit è >= 4, False altrimenti.\n" +
+            "def checkNumberOfClass(commit):\n" +
+            "\n" +
+            "    count = contaClassiJava(commit)\n" +
+            "\n" +
+            "    if count >= 4:\n" +
+            "        return True\n" +
+            "    else:\n" +
+            "        return False\n" +
+            "\n" +
+            "def formatMethodName(nomeMetodo):\n" +
+            "    s = nomeMetodo.split (\"::\");\n" +
+            "    return s[len (s) - 1]\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "def formatResult(commit):\n" +
+            "\n" +
+            "    result = ''\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        if 'java' in modifiedFile.filename:\n" +
+            "            result = result + ','+ modifiedFile.filename\n" +
+            "            for x in modifiedFile.changed_methods:\n" +
+            "                result = result + '-'+ formatMethodName(x.name)\n" +
+            "\n" +
+            "    return result\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "\n" +
+            "# leggo la classe da analizzare\n" +
+            "# ClienteBean\n" +
+            "classe = input()\n" +
+            "#leggo il path della repo\n" +
+            "pathToRepo = input()\n" +
+            "\n" +
+            "max = 0\n" +
+            "# MAIN\n" +
+            "for commit in RepositoryMining(pathToRepo,\n" +
+            "                               only_modifications_with_file_types=['.java']).traverse_commits():\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        #verifico se la classe da analizzare è presente nel commit\n" +
+            "        if classe == modifiedFile.filename:\n" +
+            "            if checkNumberOfClass(commit):\n" +
+            "                if checkMethods(commit):\n" +
+            "                    numClassiJava = contaClassiJava(commit)\n" +
+            "                    if(affectedCommit is None):\n" +
+            "                        max = numClassiJava\n" +
+            "                        affectedCommit = commit\n" +
+            "                    elif numClassiJava > max:\n" +
+            "                        max = numClassiJava\n" +
+            "                        affectedCommit = commit\n" +
+            "\n" +
+            "\n" +
+            "#stampa il risultato\n" +
+            "if(affectedCommit is not None):\n" +
+            "    print('true' + formatResult(affectedCommit) + ',' + str(max-3))\n" +
+            "else:\n" +
+            "    print('false,' + str(0))";
 
     private static final String FEATURE_ENVY_DETECTION = "from pydriller import RepositoryMining\n" +
             "\n" +

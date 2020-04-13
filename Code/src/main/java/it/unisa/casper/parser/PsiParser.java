@@ -4,10 +4,7 @@ import com.intellij.analysis.AnalysisScope;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
-import it.unisa.casper.analysis.code_smell.BlobCodeSmell;
-import it.unisa.casper.analysis.code_smell.FeatureEnvyCodeSmell;
-import it.unisa.casper.analysis.code_smell.MisplacedClassCodeSmell;
-import it.unisa.casper.analysis.code_smell.PromiscuousPackageCodeSmell;
+import it.unisa.casper.analysis.code_smell.*;
 import it.unisa.casper.analysis.code_smell_detection.blob.HistoryBlobStrategy;
 import it.unisa.casper.analysis.code_smell_detection.blob.StructuralBlobStrategy;
 import it.unisa.casper.analysis.code_smell_detection.blob.TextualBlobStrategy;
@@ -18,6 +15,7 @@ import it.unisa.casper.analysis.code_smell_detection.misplaced_class.StructuralM
 import it.unisa.casper.analysis.code_smell_detection.misplaced_class.TextualMisplacedClassStrategy;
 import it.unisa.casper.analysis.code_smell_detection.promiscuous_package.StructuralPromiscuousPackageStrategy;
 import it.unisa.casper.analysis.code_smell_detection.promiscuous_package.TextualPromiscuousPackageStrategy;
+import it.unisa.casper.analysis.code_smell_detection.shotgun_surgery.HistoryShotgunSurgeryStrategy;
 import it.unisa.casper.analysis.history_analysis_utility.AnalyzerThread;
 import it.unisa.casper.storage.beans.*;
 
@@ -110,7 +108,6 @@ public class PsiParser implements Parser {
 
     private void methosAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, MethodBean methodBean) {
         //ANALISI STORICA
-        System.out.println("PRE ANALISI");
         HistoryFeatureEnvyStrategy historyFeatureEnvyStrategy = new HistoryFeatureEnvyStrategy(projectPackages);
         FeatureEnvyCodeSmell hFeatureEnvyCodeSmell = new FeatureEnvyCodeSmell(historyFeatureEnvyStrategy, "History");
         methodBean.isAffected(hFeatureEnvyCodeSmell);
@@ -126,14 +123,17 @@ public class PsiParser implements Parser {
 
     private void classAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, ClassBean classBean) {
         //ANALISI STORICA
+        //blob
         HistoryBlobStrategy historyBlobStrategy = new HistoryBlobStrategy();
         BlobCodeSmell hBlobCodeSmell = new BlobCodeSmell(historyBlobStrategy, "History");
         Thread t = new Thread(new AnalyzerThread(classBean, hBlobCodeSmell));
         threadList.add(t);
         t.start();
 
-
-       // classBean.isAffected(hBlobCodeSmell);
+        //Shotgun surgery
+        HistoryShotgunSurgeryStrategy historyShotgunSurgeryStrategy = new HistoryShotgunSurgeryStrategy(projectPackages);
+        ShotgunSurgeryCodeSmell shotgunSurgeryCodeSmell = new ShotgunSurgeryCodeSmell("ShotgunSurgery", historyShotgunSurgeryStrategy, "History");
+        classBean.isAffected(shotgunSurgeryCodeSmell);
 
 
         TextualBlobStrategy textualBlobStrategy = new TextualBlobStrategy(coseno.get("cosenoBlob"));

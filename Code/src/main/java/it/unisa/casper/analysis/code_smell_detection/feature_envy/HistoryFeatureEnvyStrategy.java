@@ -67,25 +67,17 @@ public class HistoryFeatureEnvyStrategy implements MethodSmellDetectionStrategy 
             //leggo il risultato
             line = reader.readLine();
 
-            //elaboro il risultato
-            if(getResult(line)){
-                System.out.println("VERO");
-                System.out.println("RISULTATO: " + this.threshold);
-                setClasseInvidiosa(aMethod);
-                return true;
-            }else {
-                System.out.println("FALSO");
-                System.out.println("RISULTATO: " + this.threshold);
-                return false;
-            }
-
-
         }catch (Exception e){
             e.printStackTrace();
         }
 
-
-        return false;
+        //elaboro il risultato
+        if(getResult(line)){
+            setClasseInvidiosa(aMethod);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
