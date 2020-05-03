@@ -27,6 +27,9 @@ public class HistoryAnalysisStartup {
         createFile("blob.py", BLOB_DETECTION);
         createFile("FeatureEnvy.py", FEATURE_ENVY_DETECTION);
         createFile("ShotgunSurgery.py", SHOTGUN_SURGERY_DETECTION);
+        createFile("DivergentChange.py", DIVERGENT_CHANGE_DETECTION);
+        createFile("ParallelInheritance.py", PARALLEL_INHERITANCE_DETECTION);
+
     }
 
     private void createFile(String fileName, String fileText){
@@ -57,6 +60,131 @@ public class HistoryAnalysisStartup {
     public String getDir() {
         return dir;
     }
+
+    private static final String PARALLEL_INHERITANCE_DETECTION = "from pydriller import RepositoryMining\n" +
+            "\n" +
+            "\n" +
+            "def contaClassiJava(commit):\n" +
+            "    count = 0\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        if 'java' in modifiedFile.filename:\n" +
+            "            count = count + 1\n" +
+            "    return count\n" +
+            "\n" +
+            "\n" +
+            "def verifyInheritance(modiefiedFile):\n" +
+            "    for x in modifiedFile.diff_parsed[\"added\"]:\n" +
+            "        for item in x:\n" +
+            "            if 'extends' in str(item):\n" +
+            "                return True\n" +
+            "    return False\n" +
+            "\n" +
+            "def verifySmell(commit, affectedBoolPar):\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        if '.java' in modifiedFile.filename:\n" +
+            "            if (verifyInheritance (modifiedFile)):\n" +
+            "                affectedBoolPar = affectedBoolPar and True\n" +
+            "            else:\n" +
+            "                affectedBoolPar = affectedBoolPar and False\n" +
+            "    return affectedBoolPar\n" +
+            "\n" +
+            "# leggo la classe da analizzare\n" +
+            "#ParallelInheritanceSub1\n" +
+            "classe = input()\n" +
+            "#leggo il path della repo\n" +
+            "#C:\\Users\\faded\\Desktop\\CasperTest\n" +
+            "pathToRepo = input()\n" +
+            "\n" +
+            "checkBool = False\n" +
+            "# MAIN\n" +
+            "for commit in RepositoryMining(pathToRepo,\n" +
+            "                               only_modifications_with_file_types=['.java']).traverse_commits():\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "\n" +
+            "        # verifico la presenta della classe in analisi\n" +
+            "        if classe == modifiedFile.filename and contaClassiJava(commit) == 2:\n" +
+            "            affectedBool = True\n" +
+            "            checkBool = verifySmell(commit, affectedBool)\n" +
+            "            result = \"\"\n" +
+            "            if checkBool:\n" +
+            "                for modifiedFile in commit.modifications:\n" +
+            "                    if '.java' in modifiedFile.filename:\n" +
+            "                        result = result + modifiedFile.filename + \",\"\n" +
+            "\n" +
+            "\n" +
+            "if checkBool:\n" +
+            "    print('true'+ ',' + result + str(1))\n" +
+            "else:\n" +
+            "    print ('false')";
+
+    private static final String DIVERGENT_CHANGE_DETECTION = "from pydriller import RepositoryMining\n" +
+            "\n" +
+            "# lista contente i set dei metodi\n" +
+            "methodList = []\n" +
+            "\n" +
+            "def formatResult():\n" +
+            "    result = ''\n" +
+            "    for x in methodList:\n" +
+            "        result = result + ','\n" +
+            "        for method in x:\n" +
+            "            data = method.name.split(\"::\")\n" +
+            "            result = result + '-' + data[len(data) - 1]\n" +
+            "\n" +
+            "    return result\n" +
+            "\n" +
+            "def contaClassiJava(commit):\n" +
+            "    count = 0\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        if 'java' in modifiedFile.filename:\n" +
+            "            count = count + 1\n" +
+            "    return count\n" +
+            "\n" +
+            "# leggo la classe da analizzare\n" +
+            "classe = input()\n" +
+            "#leggo il path della repo\n" +
+            "pathToRepo = input()\n" +
+            "# MAIN\n" +
+            "vartest = 0\n" +
+            "for commit in RepositoryMining(pathToRepo,\n" +
+            "                               only_modifications_with_file_types=['.java']).traverse_commits():\n" +
+            "\n" +
+            "    for modifiedFile in commit.modifications:\n" +
+            "        #verifico la presenta della classe in analisi\n" +
+            "        if classe == modifiedFile.filename and contaClassiJava(commit) == 1:\n" +
+            "            setMetodi = set()\n" +
+            "            setMetodi.update(modifiedFile.changed_methods)\n" +
+            "            if len(setMetodi) >= 3:\n" +
+            "                methodList.append(setMetodi)\n" +
+            "\n" +
+            "\n" +
+            "x = 0\n" +
+            "y = 1\n" +
+            "bool = True\n" +
+            "while x < len(methodList)-1:\n" +
+            "    while y < len(methodList):\n" +
+            "        insiemeA = methodList[x]\n" +
+            "        insiemeB = methodList[y]\n" +
+            "        insiemeIntersezione = insiemeA.intersection(insiemeB)\n" +
+            "        if len(insiemeIntersezione) != 0:\n" +
+            "            bool = False\n" +
+            "        y = y + 1\n" +
+            "    x = x + 1\n" +
+            "    y = x + 1\n" +
+            "\n" +
+            "\n" +
+            "#se rispettano i requisiti\n" +
+            "\n" +
+            "if len(methodList) < 2:\n" +
+            "    print('false,' + str(0))\n" +
+            "else:\n" +
+            "    if len(methodList) > 0 and bool:\n" +
+            "        print('true' + formatResult() + ',' + str(len(methodList)))\n" +
+            "    else:\n" +
+            "        print('false,' + str(0))\n" +
+            "\n";
 
     private static final String SHOTGUN_SURGERY_DETECTION = "from pydriller import RepositoryMining\n" +
             "\n" +

@@ -8,11 +8,13 @@ import it.unisa.casper.analysis.code_smell.*;
 import it.unisa.casper.analysis.code_smell_detection.blob.HistoryBlobStrategy;
 import it.unisa.casper.analysis.code_smell_detection.blob.StructuralBlobStrategy;
 import it.unisa.casper.analysis.code_smell_detection.blob.TextualBlobStrategy;
+import it.unisa.casper.analysis.code_smell_detection.divergent_change.HistoryDivergentChangeStrategy;
 import it.unisa.casper.analysis.code_smell_detection.feature_envy.HistoryFeatureEnvyStrategy;
 import it.unisa.casper.analysis.code_smell_detection.feature_envy.StructuralFeatureEnvyStrategy;
 import it.unisa.casper.analysis.code_smell_detection.feature_envy.TextualFeatureEnvyStrategy;
 import it.unisa.casper.analysis.code_smell_detection.misplaced_class.StructuralMisplacedClassStrategy;
 import it.unisa.casper.analysis.code_smell_detection.misplaced_class.TextualMisplacedClassStrategy;
+import it.unisa.casper.analysis.code_smell_detection.parallel_inheritance.HistoryParallelInheritanceStrategy;
 import it.unisa.casper.analysis.code_smell_detection.promiscuous_package.StructuralPromiscuousPackageStrategy;
 import it.unisa.casper.analysis.code_smell_detection.promiscuous_package.TextualPromiscuousPackageStrategy;
 import it.unisa.casper.analysis.code_smell_detection.shotgun_surgery.HistoryShotgunSurgeryStrategy;
@@ -108,6 +110,7 @@ public class PsiParser implements Parser {
 
     private void methosAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, MethodBean methodBean) {
         //ANALISI STORICA
+        //feature envy
         HistoryFeatureEnvyStrategy historyFeatureEnvyStrategy = new HistoryFeatureEnvyStrategy(projectPackages);
         FeatureEnvyCodeSmell hFeatureEnvyCodeSmell = new FeatureEnvyCodeSmell(historyFeatureEnvyStrategy, "History");
         methodBean.isAffected(hFeatureEnvyCodeSmell);
@@ -124,6 +127,7 @@ public class PsiParser implements Parser {
     private void classAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, ClassBean classBean) {
         //ANALISI STORICA
         //blob
+        /*
         HistoryBlobStrategy historyBlobStrategy = new HistoryBlobStrategy();
         BlobCodeSmell hBlobCodeSmell = new BlobCodeSmell(historyBlobStrategy, "History");
         Thread t = new Thread(new AnalyzerThread(classBean, hBlobCodeSmell));
@@ -132,8 +136,20 @@ public class PsiParser implements Parser {
 
         //Shotgun surgery
         HistoryShotgunSurgeryStrategy historyShotgunSurgeryStrategy = new HistoryShotgunSurgeryStrategy(projectPackages);
-        ShotgunSurgeryCodeSmell shotgunSurgeryCodeSmell = new ShotgunSurgeryCodeSmell("ShotgunSurgery", historyShotgunSurgeryStrategy, "History");
+        ShotgunSurgeryCodeSmell shotgunSurgeryCodeSmell = new ShotgunSurgeryCodeSmell(historyShotgunSurgeryStrategy, "History");
         classBean.isAffected(shotgunSurgeryCodeSmell);
+
+        //Divergent change
+        HistoryDivergentChangeStrategy historyDivergentChangeStrategy = new HistoryDivergentChangeStrategy();
+        DivergentChangeCodeSmell divergentChangeCodeSmell = new DivergentChangeCodeSmell(historyDivergentChangeStrategy, "History");
+        classBean.isAffected(divergentChangeCodeSmell);
+*/
+
+
+        //Parallel Inheritance
+        HistoryParallelInheritanceStrategy historyParallelInheritanceStrategy = new HistoryParallelInheritanceStrategy(projectPackages);
+        ParallelInheritanceCodeSmell parallelInheritanceCodeSmell = new ParallelInheritanceCodeSmell(historyParallelInheritanceStrategy, "History");
+        classBean.isAffected(parallelInheritanceCodeSmell);
 
 
         TextualBlobStrategy textualBlobStrategy = new TextualBlobStrategy(coseno.get("cosenoBlob"));

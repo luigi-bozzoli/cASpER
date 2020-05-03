@@ -41,6 +41,9 @@ public class CheckProjectPage extends DialogWrapper {
     private List<MethodBean> featureEnvyList;
     private List<ClassBean> misplacedClassList;
     private List<ClassBean> blobList;
+    private List<ClassBean> divergentChangeList;
+    private List<ClassBean> parallelInheritanceList;
+    private List<ClassBean> shotgunSurgeryList;
     private JPanel pannello;
     private JTextPane codeVisual;
     private JTable table;
@@ -84,6 +87,11 @@ public class CheckProjectPage extends DialogWrapper {
         smellName.add("Misplaced Class");
         smellName.add("Blob");
         smellName.add("Promiscuous Package");
+        //Nuovi code smell
+        smellName.add("Divergent Change");
+        smellName.add("Shotgun Surgery");
+        smellName.add("Parallel Inheritance");
+
         blobThresholdName = new ArrayList<String>();
         blobThresholdName.add("LCOM");
         blobThresholdName.add("FeatureSUM");
@@ -96,6 +104,9 @@ public class CheckProjectPage extends DialogWrapper {
         featureEnvyList = new ArrayList<MethodBean>();
         misplacedClassList = new ArrayList<ClassBean>();
         blobList = new ArrayList<ClassBean>();
+        divergentChangeList = new ArrayList<ClassBean>();
+        parallelInheritanceList = new ArrayList<ClassBean>();
+        shotgunSurgeryList = new ArrayList<ClassBean>();
 
         this.currentProject = currentProj;
         this.packages = packages;
@@ -116,12 +127,14 @@ public class CheckProjectPage extends DialogWrapper {
             f.delete();
         }
 
+        //I for annidati verificano quali sono i code smells di ogni package, classe e metodo e li inseriscono in una lista
         String name = "";
         for (PackageBean p : packages) {
             if (p.getAffectedSmell().size() != 0)
                 promiscuousPackageList.add(p);
             for (ClassBean c : p.getClassList()) {
                 for (CodeSmell smellC : c.getAffectedSmell()) {
+
                     if (!name.equals(smellC.getSmellName()))
                         switch (smellC.getSmellName()) {
                             case "Blob":
@@ -131,6 +144,19 @@ public class CheckProjectPage extends DialogWrapper {
                             case "Misplaced Class":
                                 name = "Misplaced Class";
                                 misplacedClassList.add(c);
+                                break;
+                            case "Divergent Change":
+                                name = "Divergent Change";
+                                divergentChangeList.add(c);
+                                break;
+                            case "Shotgun Surgery":
+                                name = "Shotgun Surgery";
+                                shotgunSurgeryList.add(c);
+                                break;
+                            case "Parallel Inheritance":
+                                name = "Parallel Inheritance";
+                                parallelInheritanceList.add(c);
+                                break;
                         }
                 }
                 name = "";
@@ -208,10 +234,42 @@ public class CheckProjectPage extends DialogWrapper {
             }
             smellPanel.get(i).add(algo.get(i));
             algo.get(i).setLayout(new GridLayout(0, 1, 0, 0));
+
+            /*
+            if(smellName.get(i).equalsIgnoreCase("Divergent Change") || smellName.get(i).equalsIgnoreCase("Shotgun Surgery") || smellName.get(i).equalsIgnoreCase("Parallel Inheritance") ){
+
+                algoritmi.put("history"+smellName.get(i).substring(0,1), new JCheckBox("History"));
+                algo.get(i).add(algoritmi.get("history"+smellName.get(i).substring(0,1)));
+
+            }
+
+            if(smellName.get(i).equalsIgnoreCase("blob") || smellName.get(i).equalsIgnoreCase("Feature Envy")){
+
+                    algoritmi.put("textual" + smellName.get(i).substring(0, 1), new JCheckBox("Textual"));
+                    algo.get(i).add(algoritmi.get("textual" + smellName.get(i).substring(0, 1)));
+                    algoritmi.put("structural" + smellName.get(i).substring(0, 1), new JCheckBox("Structural"));
+                    algo.get(i).add(algoritmi.get("structural" + smellName.get(i).substring(0, 1)));
+                    algoritmi.put("history"+smellName.get(i).substring(0,1), new JCheckBox("History"));
+                    algo.get(i).add(algoritmi.get("history"+smellName.get(i).substring(0,1)));
+
+                }
+            if(smellName.get(i).equalsIgnoreCase("Promiscuous Package") || smellName.get(i).equalsIgnoreCase("Misplaced Class")){
+                    algoritmi.put("textual" + smellName.get(i).substring(0, 1), new JCheckBox("Textual"));
+                    algo.get(i).add(algoritmi.get("textual" + smellName.get(i).substring(0, 1)));
+                    algoritmi.put("structural" + smellName.get(i).substring(0, 1), new JCheckBox("Structural"));
+                    algo.get(i).add(algoritmi.get("structural" + smellName.get(i).substring(0, 1)));
+                }
+            */
+
+
+
             algoritmi.put("textual" + smellName.get(i).substring(0, 1), new JCheckBox("Textual"));
             algo.get(i).add(algoritmi.get("textual" + smellName.get(i).substring(0, 1)));
             algoritmi.put("structural" + smellName.get(i).substring(0, 1), new JCheckBox("Structural"));
             algo.get(i).add(algoritmi.get("structural" + smellName.get(i).substring(0, 1)));
+            //History
+            algoritmi.put("history" + smellName.get(i).substring(0,1), new JCheckBox("History"));
+            algo.get(i).add(algoritmi.get("history" + smellName.get(i).substring(0,1)));
 
         }
 
@@ -495,6 +553,7 @@ public class CheckProjectPage extends DialogWrapper {
 
     @NotNull
     @Override
+    //Apre le GUI per i singoli smell
     protected Action[] createActions() {
         Action okAction = new DialogWrapperAction("INSPECT") {
 
@@ -541,6 +600,33 @@ public class CheckProjectPage extends DialogWrapper {
                         }
                     }
 
+                    if (whereToSearch.equalsIgnoreCase("Divergent Change")) {
+                        for (ClassBean c : divergentChangeList) {
+                            if (c.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
+                                DialogWrapper divergentChange = new DivergentChangePage(c, currentProject);
+                                divergentChange.show();
+                            }
+                        }
+                    }
+
+                    if (whereToSearch.equalsIgnoreCase("Shotgun Surgery")) {
+                        for (ClassBean c : shotgunSurgeryList) {
+                            if (c.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
+                                DialogWrapper shotgunSurgery = new ShotgunSurgeryPage(c, currentProject);
+                                shotgunSurgery.show();
+                            }
+                        }
+                    }
+
+                    if (whereToSearch.equalsIgnoreCase("Parallel Inheritance")) {
+                        for (ClassBean c : parallelInheritanceList) {
+                            if (c.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
+                                DialogWrapper parallelInheritance = new ParallelInheritancePage(c, currentProject);
+                                parallelInheritance.show();
+                            }
+                        }
+                    }
+
                 } catch (ArrayIndexOutOfBoundsException ex) {
                     String message = "Select an item";
                     Messages.showMessageDialog(message, "Warning", Messages.getWarningIcon());
@@ -557,13 +643,18 @@ public class CheckProjectPage extends DialogWrapper {
         return new Action[]{okAction, new DialogWrapperExitAction("EXIT", 0)};
     }
 
+    //crea la tabella in basso a sinistra
     private void createTable() {
+
 
         Vector<String> columnNames = new Vector<>();
         columnNames.add("Member name");
         columnNames.add("Smell detected");
         columnNames.add("Textual algorithm");
         columnNames.add("Structural algorithm");
+        //History analysis
+        columnNames.add("History algorithm");
+
         columnNames.add("priority");
         model = new DefaultTableModel(columnNames, 0);
 
@@ -571,6 +662,30 @@ public class CheckProjectPage extends DialogWrapper {
             if (codeSmell.get("Blob").isSelected()) {
                 for (ClassBean c : blobList) {
                     gestione(c.getAffectedSmell(), "Blob", c.getFullQualifiedName());
+                }
+            }
+        }
+
+        if(divergentChangeList.size() != 0){
+            if(codeSmell.get("Divergent Change").isSelected()){
+                for (ClassBean c : divergentChangeList){
+                    gestione(c.getAffectedSmell(), "Divergent Change", c.getFullQualifiedName());
+                }
+            }
+        }
+
+        if(shotgunSurgeryList.size() != 0){
+            if(codeSmell.get("Shotgun Surgery").isSelected()){
+                for (ClassBean c : shotgunSurgeryList){
+                    gestione(c.getAffectedSmell(), "Shotgun Surgery", c.getFullQualifiedName());
+                }
+            }
+        }
+
+        if(parallelInheritanceList.size() != 0){
+            if(codeSmell.get("Parallel Inheritance").isSelected()){
+                for(ClassBean c : parallelInheritanceList){
+                    gestione(c.getAffectedSmell(), "Parallel Inheritance", c.getFullQualifiedName());
                 }
             }
         }
@@ -742,6 +857,9 @@ public class CheckProjectPage extends DialogWrapper {
                         }
                         ;
                         tableItem.add(prioritySmell(controllo, complessita, basso, alto));
+                        //History
+                        tableItem.insertElementAt("---",4);
+
                         model.addRow(tableItem);
                         cos = 0.0;
                         dip = 0;
@@ -752,7 +870,20 @@ public class CheckProjectPage extends DialogWrapper {
                     }
                     indice = 0.0;
                 }
+                //History
+                if(used.equalsIgnoreCase("history") && algoritmi.get("history" + codeSmell.substring(0, 1)).isSelected()){
+                    HashMap<String, Double> threshold = smell.getIndex();
+
+                    tableItem.add(bean);
+                    tableItem.add(smell.getSmellName());
+                    tableItem.add("---");
+                    tableItem.add("---");
+                    tableItem.add(""+threshold.get("threshold"));
+                    tableItem.add("Priority");
+                    model.addRow(tableItem);
+                }
             }
+
             i++;
         }
 
@@ -777,6 +908,7 @@ public class CheckProjectPage extends DialogWrapper {
         }
     }
 
+    //scrive il contenuto dell'elemento selezionato in LIST nella tabella TEXT CONTENT
     private void setArea() {
         String whatToReturn; //fullqualified name dell'elemento selezionato nella tabella
         String whereToSearch; //tipo di smell, indice della lista dove cercare il bean
@@ -817,6 +949,34 @@ public class CheckProjectPage extends DialogWrapper {
                             for (ClassBean c : misplacedClassList) {
                                 if (c.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
                                     textContent = c.getTextContent();
+                                }
+                            }
+                        } else{
+                            if(whereToSearch.equalsIgnoreCase("Divergent Change")){
+                                for (ClassBean c : divergentChangeList) {
+                                    if (c.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
+                                        textContent = c.getTextContent();
+                                    }
+                                }
+                            }else{
+                                if(whereToSearch.equalsIgnoreCase("Shotgun Surgery")){
+                                    for (ClassBean c : shotgunSurgeryList) {
+                                        if (c.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
+                                            textContent = c.getTextContent() + "-------------------------------------------";
+                                            for(ClassBean classe : c.getShotgunSurgeryHittedClasses()){
+                                                textContent = textContent + classe.getTextContent() + "-------------------------------------------";
+                                            }
+
+                                        }
+                                    }
+                                }else{
+                                    if(whereToSearch.equalsIgnoreCase("Parallel Inheritance")){
+                                        for (ClassBean c : parallelInheritanceList) {
+                                            if (c.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
+                                                textContent = c.getTextContent();
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

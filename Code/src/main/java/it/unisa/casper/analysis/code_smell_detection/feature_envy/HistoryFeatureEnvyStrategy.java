@@ -83,7 +83,7 @@ public class HistoryFeatureEnvyStrategy implements MethodSmellDetectionStrategy 
     @Override
     public HashMap<String, Double> getThresold(MethodBean aMethod) {
         HashMap<String, Double> list = new HashMap<String, Double>();
-        list.put("Percentuale", this.threshold);
+        list.put("threshold", this.threshold);
         return list;
     }
 
@@ -120,9 +120,11 @@ public class HistoryFeatureEnvyStrategy implements MethodSmellDetectionStrategy 
     }
 
     private void setClasseInvidiosa(MethodBean m){
+
         for (PackageBean packageBean : systemPackages) {
             for (ClassBean classBean : packageBean.getClassList()) {
-                if (classBean.getFullQualifiedName().contains(nomeClasseInvidiosa)) {
+                String tmp = classBean.getFullQualifiedName()+".java";
+                if (tmp.contains(nomeClasseInvidiosa)) {
                     m.setEnviedClass(classBean);
                 }
             }

@@ -7,12 +7,11 @@ public class ShotgunSurgeryCodeSmell extends ClassLevelCodeSmell{
     /**
      * Costruttore
      *
-     * @param name              rappresenta nome dello mell
      * @param detectionStrategy Strategy associato ai code smell che interessano le classi
      * @param algoritmsUsed     Stringa che rappresenta il tipo di algoritmo che ha rilevato tale smell
      */
-    public ShotgunSurgeryCodeSmell(String name, ClassSmellDetectionStrategy detectionStrategy, String algoritmsUsed) {
-        super(name, detectionStrategy, algoritmsUsed);
+    public ShotgunSurgeryCodeSmell(ClassSmellDetectionStrategy detectionStrategy, String algoritmsUsed) {
+        super(SHOTGUN_SURGERY, detectionStrategy, algoritmsUsed);
     }
 
     @Override

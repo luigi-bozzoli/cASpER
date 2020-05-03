@@ -69,7 +69,7 @@ public class HistoryBlobStrategy implements ClassSmellDetectionStrategy {
     @Override
     public HashMap<String, Double> getThresold(ClassBean aClass) {
         HashMap<String, Double> list = new HashMap<String, Double>();
-        list.put("Percentuale", this.threshold);
+        list.put("threshold", this.threshold);
         return list;
     }
 

@@ -8,6 +8,7 @@ import it.unisa.casper.storage.beans.MethodBean;
 import it.unisa.casper.storage.beans.PackageBean;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,7 +64,7 @@ public class HistoryShotgunSurgeryStrategy implements ClassSmellDetectionStrateg
         }
 
         //elaboro il risultato
-        if(getResult(line)) {
+        if(getResult(line, aClass)) {
             return true;
         }else {
             return false;
@@ -73,7 +74,7 @@ public class HistoryShotgunSurgeryStrategy implements ClassSmellDetectionStrateg
     @Override
     public HashMap<String, Double> getThresold(ClassBean aClass) {
         HashMap<String, Double> list = new HashMap<String, Double>();
-        list.put("NumeroClassi", this.threshold);
+        list.put("threshold", this.threshold);
         return list;
     }
 
@@ -87,7 +88,9 @@ public class HistoryShotgunSurgeryStrategy implements ClassSmellDetectionStrateg
         return "";
     }
 
-    private boolean getResult(String result){
+    private boolean getResult(String result, ClassBean aClass){
+
+        List<ClassBean> classiColpite = new ArrayList<>();
 
         if(result == null){
             this.threshold = 0;
@@ -102,11 +105,22 @@ public class HistoryShotgunSurgeryStrategy implements ClassSmellDetectionStrateg
                 String[] methods = list[i].split("-");
                 for (PackageBean p : systemPackages){
                     for(ClassBean c : p.getClassList()){
-                        if(c.getFullQualifiedName().contains(methods[0])){
+
+                        String[] tmpArray = c.getFullQualifiedName().split("\\.");
+                        String tmp = tmpArray[tmpArray.length-1] + ".java";
+
+
+
+                        if(tmp.equalsIgnoreCase(methods[0])){
+
+                            classiColpite.add(c);
                             for (MethodBean m : c.getMethodList()){
                                 for(int j = 1; j < methods.length; j++){
-                                    if(m.getFullQualifiedName().contains(methods[j])){
-                                        c.setShotgunSurgeryHittedMethods(m);
+                                    String[] tempMet = m.getFullQualifiedName().split("\\.");
+
+                                    if(tempMet[tempMet.length-1].equalsIgnoreCase(methods[j])){
+                                        if(c.getShotgunSurgeryHittedMethods() != null && !c.getShotgunSurgeryHittedMethods().contains(m))
+                                            c.setShotgunSurgeryHittedMethods(m);
                                     }
                                 }
                             }
@@ -115,6 +129,7 @@ public class HistoryShotgunSurgeryStrategy implements ClassSmellDetectionStrateg
                 }
             }
             this.threshold = Double.parseDouble(list[list.length - 1]);
+            aClass.setShotgunSurgeryHittedClasses(classiColpite);
             return true;
         }else{
             this.threshold = 0;

@@ -20,6 +20,9 @@ public abstract class CodeSmell<T> {
     public static final String FEATURE_ENVY = "Feature Envy";
     public static final String BLOB = "Blob";
     public static final String PROMISCUOUS_PACKAGE = "Promiscuous Package";
+    public static final String DIVERGENT_CHANGE = "Divergent Change";
+    public static final String SHOTGUN_SURGERY = "Shotgun Surgery";
+    public static final String PARALLEL_INHERITANCE = "Parallel Inheritance";
 
     protected String smellName;
     protected CodeSmellDetectionStrategy detectionStrategy;

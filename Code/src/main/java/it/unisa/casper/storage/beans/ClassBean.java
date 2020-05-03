@@ -27,7 +27,9 @@ public class ClassBean implements ComparableBean, Comparable {
     private double similarity; //somiglianza generata durante l'analisi con altre classi
 
     private List<ClassBean> shotgunSurgeryHittedClasses; //lista delle classi colpite dallo shotgun surgery
-    private MethodBeanList shotgunSurgeryHittedMethods; //lista dei metodi colpiti dallo shotgun surgery
+    private List<MethodBean> shotgunSurgeryHittedMethods; //lista dei metodi colpiti dallo shotgun surgery
+    private List<List<MethodBean>> divergentChangeMethodsSet; //lista di insiemi di metodi del divergent change
+    private ClassBean parallelInheritanceClass; //classe aggiunta con il parallel inheritance
 
     /**
      * Costruttore
@@ -67,6 +69,16 @@ public class ClassBean implements ComparableBean, Comparable {
     ;
 
     //-------------------------
+
+
+    public ClassBean getParallelInheritanceClass() {
+        return parallelInheritanceClass;
+    }
+
+    public void setParallelInheritanceClass(ClassBean parallelInheritanceClass) {
+        this.parallelInheritanceClass = parallelInheritanceClass;
+    }
+
     public List<ClassBean> getShotgunSurgeryHittedClasses() {
         return shotgunSurgeryHittedClasses;
     }
@@ -76,12 +88,27 @@ public class ClassBean implements ComparableBean, Comparable {
     }
 
     public List<MethodBean> getShotgunSurgeryHittedMethods() {
-        if (shotgunSurgeryHittedMethods == null) return null;
-        return shotgunSurgeryHittedMethods.getList();
+        if (shotgunSurgeryHittedMethods == null)
+            this.shotgunSurgeryHittedMethods = new ArrayList<>();
+
+        return this.shotgunSurgeryHittedMethods;
     }
 
     public void setShotgunSurgeryHittedMethods(MethodBean bean) {
-        if (shotgunSurgeryHittedMethods != null && shotgunSurgeryHittedMethods.getList() != null) shotgunSurgeryHittedMethods.getList().add(bean);
+        if (shotgunSurgeryHittedMethods != null) {
+            shotgunSurgeryHittedMethods.add(bean);
+        }else{
+            this.shotgunSurgeryHittedMethods = new ArrayList<>();
+            this.shotgunSurgeryHittedMethods.add(bean);
+        }
+    }
+
+    public List<List<MethodBean>> getDivergentChangeMethodsSet() {
+        return divergentChangeMethodsSet;
+    }
+
+    public void setDivergentChangeMethodsSet(List<List<MethodBean>> divergentChangeMethodsSet) {
+        this.divergentChangeMethodsSet = divergentChangeMethodsSet;
     }
 
     //---------------------------------------------------------------
