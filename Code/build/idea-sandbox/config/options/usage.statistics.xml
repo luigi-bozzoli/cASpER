@@ -23,7 +23,7 @@
     <feature id="codeassists.javadoc.external" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="codeassists.surroundwith.expression" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="navigation.recent.files" count="0" last-shown="0" last-used="0" shown-count="0" />
-    <feature id="navigation.goto.declaration" count="9" last-shown="0" last-used="1575988678157" shown-count="0" />
+    <feature id="navigation.goto.declaration" count="10" last-shown="0" last-used="1588582352384" shown-count="0" />
     <feature id="scratch" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="editing.completion.finishByDotEtc" count="0" last-shown="1575994550982" last-used="0" shown-count="7" />
     <feature id="navigation.goto.implementation" count="0" last-shown="0" last-used="0" shown-count="0" />
@@ -55,7 +55,7 @@
     <feature id="editing.completion.postfix" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="refactoring.introduceVariable.incompleteStatement" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="dir.diff" count="0" last-shown="0" last-used="0" shown-count="0" />
-    <feature id="editing.select.word" count="22" last-shown="0" last-used="1576090216517" shown-count="0" />
+    <feature id="editing.select.word" count="24" last-shown="0" last-used="1588582329364" shown-count="0" />
     <feature id="editing.add.carets.using.double.ctrl" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="codeassists.quickjavadoc.lookup" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="ui.scheme.quickswitch" count="0" last-shown="0" last-used="0" shown-count="0" />
@@ -80,10 +80,10 @@
       <option name="lastDate" value="1575932400000" />
     </completionStatsTag>
     <fixesStatsTag>
-      <option name="invocations" value="1" />
+      <option name="invocations" value="2" />
       <option name="startDate" value="1573081200000" />
-      <option name="dayCount" value="1" />
-      <option name="lastDate" value="1573081200000" />
+      <option name="dayCount" value="2" />
+      <option name="lastDate" value="1588543200000" />
     </fixesStatsTag>
   </component>
   <component name="UsagesStatistic" show-notification="false" />

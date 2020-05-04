@@ -1,10 +1,7 @@
 package it.unisa.casper.refactor.strategy;
 
-import it.unisa.casper.refactor.exceptions.BlobException;
-import it.unisa.casper.refactor.exceptions.FeatureEnvyException;
-import it.unisa.casper.refactor.exceptions.MisplacedClassException;
-import it.unisa.casper.refactor.exceptions.PromiscuousPackageException;
+import it.unisa.casper.refactor.exceptions.*;
 
 public interface RefactoringStrategy {
-    void doRefactor() throws FeatureEnvyException, MisplacedClassException, PromiscuousPackageException, BlobException;
+    void doRefactor() throws RefactorException /*FeatureEnvyException, MisplacedClassException, PromiscuousPackageException, BlobException*/;
 }

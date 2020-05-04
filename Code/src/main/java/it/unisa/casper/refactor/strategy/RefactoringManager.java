@@ -1,10 +1,7 @@
 package it.unisa.casper.refactor.strategy;
 
 
-import it.unisa.casper.refactor.exceptions.BlobException;
-import it.unisa.casper.refactor.exceptions.FeatureEnvyException;
-import it.unisa.casper.refactor.exceptions.MisplacedClassException;
-import it.unisa.casper.refactor.exceptions.PromiscuousPackageException;
+import it.unisa.casper.refactor.exceptions.*;
 
 public class RefactoringManager {
     private RefactoringStrategy refactoringStrategy;
@@ -14,7 +11,7 @@ public class RefactoringManager {
         this.refactoringStrategy = Rstrategy;
     }
 
-    public void executeRefactor() throws PromiscuousPackageException, BlobException, FeatureEnvyException, MisplacedClassException {
+    public void executeRefactor() throws RefactorException /*PromiscuousPackageException, BlobException, FeatureEnvyException, MisplacedClassException*/ {
         refactoringStrategy.doRefactor();
     }
 

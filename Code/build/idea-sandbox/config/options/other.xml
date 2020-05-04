@@ -1,6 +1,7 @@
 <application>
   <component name="PropertiesComponent">
     <property name="Default.SavedEditorTheme" value="_@user_Default" />
+    <property name="ExpandRunDashboardTypesPanel" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="SettingsSearchHistory" value="Theme" />

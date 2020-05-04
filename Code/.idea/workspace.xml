@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47afe1f5-89a3-48a7-a848-fb15bcd093ed" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell/DivergentChangeCodeSmell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell/ParallelInheritanceCodeSmell.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell_detection/divergent_change/HistoryDivergentChangeStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell_detection/parallel_inheritance/HistoryParallelInheritanceStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/gui/DivergentChangePage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/gui/ParallelInheritancePage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/gui/ShotgunSurgeryPage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/refactor/manipulator/ShotgunSurgeryRefactoringStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/fileHashes/fileHashes.lock" afterDir="false" />
@@ -16,63 +10,65 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell/CodeSmell.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell/CodeSmell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell/ShotgunSurgeryCodeSmell.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell/ShotgunSurgeryCodeSmell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell_detection/blob/HistoryBlobStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell_detection/blob/HistoryBlobStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell_detection/feature_envy/HistoryFeatureEnvyStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell_detection/feature_envy/HistoryFeatureEnvyStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell_detection/shotgun_surgery/HistoryShotgunSurgeryStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/code_smell_detection/shotgun_surgery/HistoryShotgunSurgeryStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/history_analysis_utility/HistoryAnalysisStartup.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/analysis/history_analysis_utility/HistoryAnalysisStartup.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage$9.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/CheckProjectPage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/parser/PsiParser$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/parser/PsiParser$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/parser/PsiParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/parser/PsiParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/storage/beans/ClassBean$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/storage/beans/ClassBean$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/storage/beans/ClassBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/storage/beans/ClassBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell/CodeSmell.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell/CodeSmell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell/ShotgunSurgeryCodeSmell.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell/ShotgunSurgeryCodeSmell.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell_detection/blob/HistoryBlobStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell_detection/blob/HistoryBlobStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell_detection/feature_envy/HistoryFeatureEnvyStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell_detection/feature_envy/HistoryFeatureEnvyStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell_detection/shotgun_surgery/HistoryShotgunSurgeryStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/code_smell_detection/shotgun_surgery/HistoryShotgunSurgeryStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/history_analysis_utility/HistoryAnalysisStartup.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/analysis/history_analysis_utility/HistoryAnalysisStartup.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage$9.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/CheckProjectPage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/parser/PsiParser$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/parser/PsiParser$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/parser/PsiParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/parser/PsiParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/storage/beans/ClassBean$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/storage/beans/ClassBean$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/storage/beans/ClassBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/storage/beans/ClassBean.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/ParallelInheritancePage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/ParallelInheritancePage$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/ParallelInheritancePage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/gui/ParallelInheritancePage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/refactor/manipulator/FeatureEnvyRefactoringStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/refactor/manipulator/FeatureEnvyRefactoringStrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/refactor/manipulator/MethodMover.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/refactor/manipulator/MethodMover.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/refactor/strategy/RefactoringManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/refactor/strategy/RefactoringManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/refactor/strategy/RefactoringStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main-instrumented/it/unisa/casper/refactor/strategy/RefactoringStrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/ParallelInheritancePage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/ParallelInheritancePage$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/ParallelInheritancePage.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/gui/ParallelInheritancePage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/refactor/manipulator/FeatureEnvyRefactoringStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/refactor/manipulator/FeatureEnvyRefactoringStrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/refactor/manipulator/MethodMover.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/refactor/manipulator/MethodMover.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/refactor/strategy/RefactoringManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/refactor/strategy/RefactoringManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/refactor/strategy/RefactoringStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/it/unisa/casper/refactor/strategy/RefactoringStrategy.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/idea-sandbox/config/options/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/config/options/other.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/idea-sandbox/config/options/recentProjects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/config/options/recentProjects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/config/options/usage.statistics.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/config/options/usage.statistics.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/LocalHistory/changes.storageData" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/LocalHistory/changes.storageData" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/LocalHistory/changes.storageRecordIndex" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/LocalHistory/changes.storageRecordIndex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/caches/attrib.dat.storageData" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/caches/attrib.dat.storageData" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/caches/attrib.dat.storageRecordIndex" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/caches/attrib.dat.storageRecordIndex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/caches/content.dat.storageData" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/caches/content.dat.storageData" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/caches/content.dat.storageRecordIndex" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/caches/content.dat.storageRecordIndex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/caches/contentHashes.dat" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/caches/contentHashes.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/caches/contentHashes.dat.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/caches/contentHashes.dat.keystream" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/caches/contentHashes.dat.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/caches/contentHashes.dat.keystream.len" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/caches/contentHashes.dat_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/caches/contentHashes.dat_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/caches/records.dat" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/caches/records.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/hashesWithFileType" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/hashesWithFileType" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/hashesWithFileType.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/hashesWithFileType.keystream" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/hashesWithFileType.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/hashesWithFileType.keystream.len" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/hashesWithFileType_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/hashesWithFileType_i" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/idindex/values" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/idindex/values" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/idindex/values.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/idindex/values.values.at" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/idindex/values_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/idindex/values_i" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/todoindex/values" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/todoindex/values" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/todoindex/values.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/todoindex/values.values.at" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/todoindex/values_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/todoindex/values_i" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/trigram.index/values" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/trigram.index/values" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/trigram.index/values.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/trigram.index/values.values.at" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/trigram.index/values_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/.persistent/trigram.index/values_i" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/idindex/IdIndex.storage" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/idindex/IdIndex.storage" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/idindex/IdIndex.storage.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/idindex/IdIndex.storage.values.at" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/idindex/IdIndex.storage_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/idindex/IdIndex.storage_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/Stubs.storage" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/Stubs.storage" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/Stubs.storage.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/Stubs.storage.values.at" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/Stubs.storage_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/Stubs.storage_i" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage.keystream" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage.keystream.len" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage.len" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage.values.at" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/stubs/java.method.name/java.method.name.storage_i" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/todoindex/fileIdToHashId" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/todoindex/fileIdToHashId" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/index/todoindex/fileIdToHashId_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/index/todoindex/fileIdToHashId_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/idea-sandbox/system/log/idea.log" beforeDir="false" afterPath="$PROJECT_DIR$/build/idea-sandbox/system/log/idea.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/libs/casper-1.1.2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/casper-1.1.2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell/CodeSmell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell/CodeSmell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell/ShotgunSurgeryCodeSmell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell/ShotgunSurgeryCodeSmell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell_detection/blob/HistoryBlobStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell_detection/blob/HistoryBlobStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell_detection/feature_envy/HistoryFeatureEnvyStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell_detection/feature_envy/HistoryFeatureEnvyStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell_detection/shotgun_surgery/HistoryShotgunSurgeryStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/code_smell_detection/shotgun_surgery/HistoryShotgunSurgeryStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/history_analysis_utility/HistoryAnalysisStartup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/analysis/history_analysis_utility/HistoryAnalysisStartup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/gui/CheckProjectPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/gui/CheckProjectPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/parser/PsiParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/parser/PsiParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/storage/beans/ClassBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/storage/beans/ClassBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/refactor/manipulator/FeatureEnvyRefactoringStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/refactor/manipulator/FeatureEnvyRefactoringStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/refactor/manipulator/MethodMover.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/refactor/manipulator/MethodMover.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/refactor/strategy/RefactoringManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/refactor/strategy/RefactoringManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/unisa/casper/refactor/strategy/RefactoringStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/unisa/casper/refactor/strategy/RefactoringStrategy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,6 +239,7 @@
       <workItem from="1588341813060" duration="1014000" />
       <workItem from="1588507137646" duration="6741000" />
       <workItem from="1588514063696" duration="64000" />
+      <workItem from="1588580229699" duration="3149000" />
     </task>
     <servers />
   </component>
@@ -285,10 +282,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1585565916457" />
-    <state x="488" y="65" key="#com.intellij.ide.util.MemberChooser" timestamp="1588510445034">
+    <state x="488" y="65" key="#com.intellij.ide.util.MemberChooser" timestamp="1588583214269">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="488" y="65" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1588510445034" />
+    <state x="488" y="65" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1588583214269" />
     <state x="531" y="253" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1585565816372">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -305,22 +302,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1586693230082" />
-    <state width="1323" height="176" key="GridCell.Tab.0.bottom" timestamp="1588513975561">
+    <state width="1323" height="176" key="GridCell.Tab.0.bottom" timestamp="1588583426154">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="176" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588513975561" />
-    <state width="1323" height="176" key="GridCell.Tab.0.center" timestamp="1588513975561">
+    <state width="1323" height="176" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588583426154" />
+    <state width="1323" height="176" key="GridCell.Tab.0.center" timestamp="1588583426154">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="176" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1588513975561" />
-    <state width="1323" height="176" key="GridCell.Tab.0.left" timestamp="1588513975561">
+    <state width="1323" height="176" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1588583426154" />
+    <state width="1323" height="176" key="GridCell.Tab.0.left" timestamp="1588583426154">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="176" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1588513975561" />
-    <state width="1323" height="176" key="GridCell.Tab.0.right" timestamp="1588513975561">
+    <state width="1323" height="176" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1588583426154" />
+    <state width="1323" height="176" key="GridCell.Tab.0.right" timestamp="1588583426154">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="176" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1588513975561" />
+    <state width="1323" height="176" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1588583426154" />
     <state x="474" y="75" key="RollbackChangesDialog" timestamp="1585565665453">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
