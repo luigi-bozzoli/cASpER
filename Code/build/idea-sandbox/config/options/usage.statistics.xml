@@ -55,7 +55,7 @@
     <feature id="editing.completion.postfix" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="refactoring.introduceVariable.incompleteStatement" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="dir.diff" count="0" last-shown="0" last-used="0" shown-count="0" />
-    <feature id="editing.select.word" count="24" last-shown="0" last-used="1588582329364" shown-count="0" />
+    <feature id="editing.select.word" count="28" last-shown="0" last-used="1588771006505" shown-count="0" />
     <feature id="editing.add.carets.using.double.ctrl" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="codeassists.quickjavadoc.lookup" count="0" last-shown="0" last-used="0" shown-count="0" />
     <feature id="ui.scheme.quickswitch" count="0" last-shown="0" last-used="0" shown-count="0" />
@@ -80,10 +80,10 @@
       <option name="lastDate" value="1575932400000" />
     </completionStatsTag>
     <fixesStatsTag>
-      <option name="invocations" value="2" />
+      <option name="invocations" value="3" />
       <option name="startDate" value="1573081200000" />
-      <option name="dayCount" value="2" />
-      <option name="lastDate" value="1588543200000" />
+      <option name="dayCount" value="3" />
+      <option name="lastDate" value="1588716000000" />
     </fixesStatsTag>
   </component>
   <component name="UsagesStatistic" show-notification="false" />

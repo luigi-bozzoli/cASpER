@@ -91,8 +91,9 @@ public class ShotgunSurgeryPage  extends DialogWrapper {
 
             @Override
             protected void doAction(ActionEvent actionEvent) {
-                //IMPLEMENTARE LOGICA REFACTORING
-                System.out.println("OK SHOTGUN SURGERY");
+                ShothunSurgeryWizard shothunSurgeryWizard = new ShothunSurgeryWizard(shotgunSurgeryClass, project);
+                shothunSurgeryWizard.show();
+                close(0);
             }
         };
         return new Action[]{okAction, new DialogWrapperExitAction("CANCEL", 0)};

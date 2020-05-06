@@ -133,12 +133,14 @@ public class PsiParser implements Parser {
         Thread t = new Thread(new AnalyzerThread(classBean, hBlobCodeSmell));
         threadList.add(t);
         t.start();
+        */
 
         //Shotgun surgery
         HistoryShotgunSurgeryStrategy historyShotgunSurgeryStrategy = new HistoryShotgunSurgeryStrategy(projectPackages);
         ShotgunSurgeryCodeSmell shotgunSurgeryCodeSmell = new ShotgunSurgeryCodeSmell(historyShotgunSurgeryStrategy, "History");
         classBean.isAffected(shotgunSurgeryCodeSmell);
 
+/*
         //Divergent change
         HistoryDivergentChangeStrategy historyDivergentChangeStrategy = new HistoryDivergentChangeStrategy();
         DivergentChangeCodeSmell divergentChangeCodeSmell = new DivergentChangeCodeSmell(historyDivergentChangeStrategy, "History");
