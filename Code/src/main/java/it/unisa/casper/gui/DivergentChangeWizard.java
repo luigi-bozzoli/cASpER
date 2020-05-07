@@ -4,6 +4,7 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
+import it.unisa.casper.refactor.manipulator.DivergentChangeRefactoringStrategy;
 import it.unisa.casper.refactor.manipulator.ShotgunSurgeryRefactoringStrategy;
 import it.unisa.casper.refactor.strategy.RefactoringManager;
 import it.unisa.casper.storage.beans.ClassBean;
@@ -48,6 +49,11 @@ public class DivergentChangeWizard extends DialogWrapper {
 
         src.main.java.it.unisa.casper.gui.StyleText generator = new src.main.java.it.unisa.casper.gui.StyleText();
 
+        JTextPane classeVecchia = new JTextPane();
+        String textContentOld = classeAffetta.getTextContent();
+        classeVecchia.setStyledDocument(generator.createDocument(textContentOld));
+        sx.add(classeVecchia);
+
         for(ClassBean c : splittedClasses){
             JTextPane classeNuova = new JTextPane();
             String textContentNew = c.getTextContent();
@@ -76,31 +82,23 @@ public class DivergentChangeWizard extends DialogWrapper {
             @Override
             protected void doAction(ActionEvent actionEvent) {
 
-                ShotgunSurgeryRefactoringStrategy shotgunSurgeryRefactoringStrategy = new ShotgunSurgeryRefactoringStrategy(classeAffetta, project);
-                RefactoringManager refactoringManager = new RefactoringManager(shotgunSurgeryRefactoringStrategy);
+                DivergentChangeRefactoringStrategy divergentChangeRefactoringStrategy = new DivergentChangeRefactoringStrategy(classeAffetta, splittedClasses, project);
+                RefactoringManager refactoringManager = new RefactoringManager(divergentChangeRefactoringStrategy);
 
-                WriteCommandAction.runWriteCommandAction(project, () -> {
+              //  WriteCommandAction.runWriteCommandAction(project, () -> {
                     try {
                         refactoringManager.executeRefactor();
                     } catch (Exception e) {
                         errorOccurred = true;
-                        message = e.getMessage();
+                        message = "Error during refactoring";
                     }
-                });
+            //    });
 
                 if (errorOccurred) {
-                    //message = "Something went wrong during refactoring. Press Ctrl+Z to fix";
                     icon = Messages.getErrorIcon();
                 } else {
-                    message = "Move method refactoring correctly executed.\nCheck the imports in the manipulated classes.";
+                    message = "Extract class refactoring correctly executed.";
                     icon = Messages.getInformationIcon();
-
-                    /*try {
-                        FileWriter f = new FileWriter(System.getProperty("user.home") + File.separator + ".casper" + File.separator + "refactoring.txt");
-                        BufferedWriter out = new BufferedWriter(f);
-                        out.write(textAreaContent.toString());
-                    } catch (IOException e) {
-                    }*/
                 }
 
                 Messages.showMessageDialog(message, "Outcome of refactoring", icon);

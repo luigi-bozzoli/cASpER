@@ -3,6 +3,7 @@ package it.unisa.casper.gui;
 
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.ui.Messages;
+import it.unisa.casper.refactor.exceptions.RefactorException;
 import it.unisa.casper.refactor.splitting_algorithm.SplitClasses;
 import org.jetbrains.annotations.NotNull;
 import src.main.java.it.unisa.casper.gui.StyleText;
@@ -22,15 +23,18 @@ import java.util.List;
 
 public class DivergentChangePage  extends DialogWrapper {
 
+    private List<ClassBean> splittedClasses;
     private ClassBean divergentChangeClass;
     private Project project;
     private JPanel mainPanel;
+    private boolean errorOccured;
 
 
     protected DivergentChangePage(ClassBean divergentChangeClass, @Nullable Project project) {
         super(project, true);
         this.divergentChangeClass = divergentChangeClass;
         this.project = project;
+        this.errorOccured = false;
         setResizable(false);
         init();
         setTitle("DIVERGENT CHANGE PAGE");
@@ -93,9 +97,23 @@ public class DivergentChangePage  extends DialogWrapper {
 
             @Override
             protected void doAction(ActionEvent actionEvent) {
-                //IMPLEMENTARE LOGICA REFACTORING
-                System.out.println("OK DIVERGENT CHANGE");
-            }
+                message = "Something went wrong in computing solution";
+                ProgressManager.getInstance().runProcessWithProgressSynchronously(() -> {
+                    try {
+                        splittedClasses = (List<ClassBean>) new SplitClasses().splitClassHistory(divergentChangeClass);
+                    } catch (RefactorException e) {
+                        errorOccured = true;
+                    }
+                }, "Divergent Change", false, project);
+
+                if (errorOccured) {
+                    Messages.showMessageDialog(message, "Oh!No!", Messages.getErrorIcon());
+                } else {
+                        DivergentChangeWizard divergentChangeWizard = new DivergentChangeWizard(divergentChangeClass, splittedClasses, project);
+                        divergentChangeWizard.show();
+                    }
+                    close(0);
+                }
         };
         return new Action[]{okAction, new DialogWrapperExitAction("CANCEL", 0)};
     }

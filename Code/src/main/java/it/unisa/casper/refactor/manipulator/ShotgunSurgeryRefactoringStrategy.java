@@ -24,7 +24,6 @@ public class ShotgunSurgeryRefactoringStrategy implements RefactoringStrategy {
         List<ClassBean> listaClassiColpite = affectedClass.getShotgunSurgeryHittedClasses();
 
         for(ClassBean c : listaClassiColpite){
-            System.out.println("NOME CLASSE: "+ c.getFullQualifiedName());
 
             if(!c.getFullQualifiedName().equals(affectedClass.getFullQualifiedName())) {
                 List<MethodBean> listaMetodiColpiti = c.getShotgunSurgeryHittedMethods();

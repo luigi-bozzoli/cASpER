@@ -1,5 +1,6 @@
 package it.unisa.casper.refactor.splitting_algorithm;
 
+import it.unisa.casper.refactor.exceptions.RefactorException;
 import it.unisa.casper.storage.beans.*;
 
 import java.util.*;
@@ -106,15 +107,40 @@ public class SplitClasses {
         return tmpIndexMax;
     }
 
+
+    public Collection<ClassBean> splitClassHistory(ClassBean affectedClass) throws RefactorException {
+
+        if(affectedClass.getDivergentChangeMethodsSet() == null || affectedClass.getDivergentChangeMethodsSet().size() == 0){
+            throw new RefactorException("");
+        }
+
+        String packageName = affectedClass.getFullQualifiedName().substring(0, affectedClass.getFullQualifiedName().lastIndexOf('.'));
+        Collection<ClassBean> result = new Vector<>();
+
+
+        int index = 0;
+        for(List<MethodBean> l : affectedClass.getDivergentChangeMethodsSet()){
+            index++;
+            Vector<MethodBean> methods = new Vector<>(l);
+            ClassBean tmpClass = createSplittedClassBean(index, packageName, null, methods, new Vector<>(affectedClass.getInstanceVariablesList()), affectedClass.getBelongingPackage());
+            result.add(tmpClass);
+        }
+
+        return result;
+    }
+
     private ClassBean createSplittedClassBean(int index, String packageName, Vector<String> chain, Vector<MethodBean> methods, Vector<InstanceVariableBean> instanceVariables, PackageBean belongingPackage) {
         String classShortName = "Class_" + (index + 1);
         String tempName = packageName + "." + classShortName;
-        String[] methodsNames = splitPattern.split(chain.elementAt(index));
-
         List<MethodBean> methodsToAdd = new ArrayList<>();
 
-        for (String methodsName : methodsNames) {
-            methodsToAdd.add(methods.elementAt(Integer.valueOf(methodsName)));
+        if(chain != null) {
+            String[] methodsNames = splitPattern.split(chain.elementAt(index));
+            for (String methodsName : methodsNames) {
+                methodsToAdd.add(methods.elementAt(Integer.valueOf(methodsName)));
+            }
+        }else{
+            methodsToAdd = new ArrayList<>(methods);
         }
 
         Set<InstanceVariableBean> instanceVariableBeanSet = new HashSet<>();
