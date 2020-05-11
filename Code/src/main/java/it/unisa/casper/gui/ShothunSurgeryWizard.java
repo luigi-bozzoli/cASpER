@@ -4,6 +4,8 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
+import it.unisa.casper.gui.radarMap.RadarMapUtils;
+import it.unisa.casper.gui.radarMap.RadarMapUtilsAdapter;
 import it.unisa.casper.refactor.manipulator.FeatureEnvyRefactoringStrategy;
 import it.unisa.casper.refactor.manipulator.ShotgunSurgeryRefactoringStrategy;
 import it.unisa.casper.refactor.strategy.RefactoringManager;
@@ -28,21 +30,35 @@ public class ShothunSurgeryWizard extends DialogWrapper {
     private ClassBean classeAffetta;
     private JPanel mainPanel;
     private boolean errorOccurred;
+    private RadarMapUtils radars;
+    private JPanel radarmaps;
 
     protected ShothunSurgeryWizard(ClassBean classeAffetta, Project project) {
         super(true);
         this.classeAffetta = classeAffetta;
         this.project = project;
         this.errorOccurred = false;
-        setResizable(false);
+        setResizable(true);
         init();
-        setTitle("SHOTGUN SURGERY PAGE");
+        setTitle("SHOTGUN SURGERY WIZARD");
     }
 
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
         mainPanel = new JPanel();
+        radarmaps = new JPanel();
+        radarmaps.setLayout(new GridLayout(0, 2));
+
+        radars = new RadarMapUtilsAdapter();
+        JPanel oldClassRadarMap = radars.createRadarMapFromClassBean(classeAffetta, "Divergent Change Old Class");
+        JPanel newClassRadarMap = radars.createRadarMapFromClassBean(new ClassBean.Builder(classeAffetta.getFullQualifiedName(), generaTextContent()).build(), "New Class");
+        oldClassRadarMap.setSize(200,200);
+        newClassRadarMap.setSize(200,200);
+        radarmaps.add(oldClassRadarMap);
+        radarmaps.add(newClassRadarMap);
+
+
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
         JPanel sx = new JPanel();
         JPanel dx = new JPanel();
@@ -66,7 +82,12 @@ public class ShothunSurgeryWizard extends DialogWrapper {
         mainPanel.add(dx);
 
         JScrollPane scroll = new JScrollPane(mainPanel);
-        return scroll;
+
+        JPanel temp = new JPanel(new GridLayout(2,0));
+        temp.add(radarmaps);
+        temp.add(scroll);
+
+        return temp;
     }
 
     private String generaTextContent(){

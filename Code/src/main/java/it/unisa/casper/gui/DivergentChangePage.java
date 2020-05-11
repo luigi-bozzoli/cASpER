@@ -3,6 +3,8 @@ package it.unisa.casper.gui;
 
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.ui.Messages;
+import it.unisa.casper.gui.radarMap.RadarMapUtils;
+import it.unisa.casper.gui.radarMap.RadarMapUtilsAdapter;
 import it.unisa.casper.refactor.exceptions.RefactorException;
 import it.unisa.casper.refactor.splitting_algorithm.SplitClasses;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +30,8 @@ public class DivergentChangePage  extends DialogWrapper {
     private Project project;
     private JPanel mainPanel;
     private boolean errorOccured;
+    private RadarMapUtils radars;
+    private JPanel radarmaps;
 
 
     protected DivergentChangePage(ClassBean divergentChangeClass, @Nullable Project project) {
@@ -35,7 +39,7 @@ public class DivergentChangePage  extends DialogWrapper {
         this.divergentChangeClass = divergentChangeClass;
         this.project = project;
         this.errorOccured = false;
-        setResizable(false);
+        setResizable(true);
         init();
         setTitle("DIVERGENT CHANGE PAGE");
     }
@@ -43,8 +47,17 @@ public class DivergentChangePage  extends DialogWrapper {
     @Nullable
     @Override
     protected JComponent createCenterPanel() {
+        radars = new RadarMapUtilsAdapter();
+        JPanel radarMap = radars.createRadarMapFromClassBean(divergentChangeClass, "Divergent Change Class Topics");
+
+        radarmaps = new JPanel();
+        radarmaps.setLayout(new GridLayout(0, 1));
+        radarMap.setSize(200,200);
+        radarmaps.add(radarMap);
+
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+
         JPanel sx = new JPanel();
         JPanel dx = new JPanel();
         sx.setLayout(new BoxLayout(sx, BoxLayout.Y_AXIS));
@@ -85,7 +98,12 @@ public class DivergentChangePage  extends DialogWrapper {
         mainPanel.add(sx);
         mainPanel.add(dx);
         JScrollPane scroll = new JScrollPane(mainPanel);
-        return scroll;
+
+        JPanel temp = new JPanel(new GridLayout(2,0));
+        temp.add(radarmaps);
+        temp.add(scroll);
+
+        return temp;
     }
 
     @NotNull

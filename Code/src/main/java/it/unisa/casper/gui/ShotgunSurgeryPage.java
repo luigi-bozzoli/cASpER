@@ -1,5 +1,7 @@
 package it.unisa.casper.gui;
 
+import it.unisa.casper.gui.radarMap.RadarMapUtils;
+import it.unisa.casper.gui.radarMap.RadarMapUtilsAdapter;
 import org.jetbrains.annotations.NotNull;
 import src.main.java.it.unisa.casper.gui.StyleText;
 import com.intellij.openapi.project.Project;
@@ -20,12 +22,15 @@ public class ShotgunSurgeryPage  extends DialogWrapper {
     private ClassBean shotgunSurgeryClass;
     private Project project;
     private JPanel mainPanel;
+    private RadarMapUtils radars;
+    private JPanel radarmaps;
 
     protected ShotgunSurgeryPage(ClassBean shotgunSurgeryClass, @Nullable Project project) {
         super(project, true);
         this.shotgunSurgeryClass = shotgunSurgeryClass;
         this.project = project;
-        setResizable(false);
+       // setSize(10000, 10000);
+        setResizable(true);
         init();
         setTitle("SHOTGUN SURGERY PAGE");
     }
@@ -34,8 +39,18 @@ public class ShotgunSurgeryPage  extends DialogWrapper {
     @Override
     protected JComponent createCenterPanel() {
 
+        radarmaps = new JPanel();
+        radarmaps.setLayout(new GridLayout(0, 1));
+
+        radars = new RadarMapUtilsAdapter();
+        JPanel radarMap = radars.createRadarMapFromClassBean(shotgunSurgeryClass, "Shotgun Surgery Class Topics");
+        radarMap.setSize(300,300);
+        radarmaps.add(radarMap);
+
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+
+
         JPanel sx = new JPanel();
         JPanel dx = new JPanel();
         sx.setLayout(new BoxLayout(sx, BoxLayout.Y_AXIS));
@@ -46,6 +61,7 @@ public class ShotgunSurgeryPage  extends DialogWrapper {
 
         int indice = 0;
         for (ClassBean c : listaClassiColpite) {
+
             List<MethodBean> listaMetodiColpiti = c.getShotgunSurgeryHittedMethods();
 
             indice++;
@@ -60,6 +76,10 @@ public class ShotgunSurgeryPage  extends DialogWrapper {
 
             String textContent = "";
             for (MethodBean m : listaMetodiColpiti) {
+                //TEST
+                System.out.println(m.getFullQualifiedName());
+                //TEST
+
                 textContent = textContent + m.getTextContent() + "\n";
             }
 
@@ -78,7 +98,12 @@ public class ShotgunSurgeryPage  extends DialogWrapper {
         mainPanel.add(sx);
         mainPanel.add(dx);
         JScrollPane scroll = new JScrollPane(mainPanel);
-        return scroll;
+
+        JPanel temp = new JPanel(new GridLayout(2,0));
+        temp.add(radarmaps);
+        temp.add(scroll);
+
+        return temp;
     }
 
 

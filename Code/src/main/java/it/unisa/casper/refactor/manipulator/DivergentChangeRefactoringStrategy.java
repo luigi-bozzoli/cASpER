@@ -32,8 +32,6 @@ public class DivergentChangeRefactoringStrategy implements RefactoringStrategy {
     @Override
     public void doRefactor() throws RefactorException {
 
-      /*  BlobRefatoringStrategy s = new BlobRefatoringStrategy(originalClass, splittedList, project);
-        s.doRefactor();*/
 
 
 
@@ -76,77 +74,5 @@ public class DivergentChangeRefactoringStrategy implements RefactoringStrategy {
             }
         }
 
-        /*
-        PsiClass aClass;
-        final int[] i = {0};
-        for (ClassBean classToMove : splittedList) {
-            aClass = javaPsiFacade.findClasses(classToMove.getFullQualifiedName(), GlobalSearchScope.allScope(project))[0];
-
-            methodsToMove = new ArrayList<>();
-            methodsToMove.add(aClass.getMethods()[0]);
-            ExtractClassProcessor processor = new ExtractClassProcessor(aClass, new ArrayList<>(), methodsToMove, new ArrayList<>(), packageName, "classForFixingBlobClass" + i[0]);
-            processor.run();
-            i[0]++;
-        }*/
-
-        /*
-        WriteCommandAction.runWriteCommandAction(project, () -> {
-            i[0] = 0;
-            int j;
-            List<MethodBean> listName;
-            boolean found = false;
-            for (PsiMethod metodoSplittato : psiOriginalClass.getMethods()) {
-
-                while (i[0] < splittedList.size() && !found) {
-                    j = 0;
-                    listName = splittedList.get(i[0]).getMethodList();
-                    while (j < listName.size() && !listName.get(j).getFullQualifiedName().contains(metodoSplittato.getName())) {
-
-                        j++;
-                    }
-                    if (j < listName.size()) found = true;
-                    i[0]++;
-                }
-                createDelegation(metodoSplittato, "Class_" + (i[0]));
-                i[0] = 0;
-                found = false;
-            }
-        });
-        */
-
-    }
-
-    private void createDelegation(PsiMethod metodoSplittato, String newName) {
-        //ottengo il metodo da aggiornare
-        PsiMethod metodoDaAggiornare = psiOriginalClass.findMethodsByName(metodoSplittato.getName(), true)[0];
-        //Creo il corpo del metodo da modificare
-        String scope = metodoDaAggiornare.getModifierList().getText();
-        String returnType = metodoDaAggiornare.getReturnType().getPresentableText();
-        String name = metodoDaAggiornare.getName();
-        String parameters = metodoDaAggiornare.getParameterList().getText();
-        String throwsList = metodoDaAggiornare.getThrowsList().getText();
-        //Creo il nuovo Body
-        StringBuilder newMethodBody = new StringBuilder("{\n\t");
-        newMethodBody.append(newName + " variable = new " + newName + "();\n\t");
-        if (metodoDaAggiornare.getReturnType().getCanonicalText() != "void")
-            newMethodBody.append("return  ");
-        //Setto la lista dei parametri da passare
-        StringBuilder parametriDaPassareBuilder = new StringBuilder("(");
-        for (PsiParameter parametroName : metodoDaAggiornare.getParameterList().getParameters()) {
-            parametriDaPassareBuilder.append(parametroName.getName() + ", ");
-        }
-        String parametriDaPassare = parametriDaPassareBuilder.toString();
-        try {
-            parametriDaPassare = parametriDaPassare.substring(0, parametriDaPassare.length() - 2);
-        } catch (IndexOutOfBoundsException ioB) {
-            parametriDaPassare = parametriDaPassare.substring(0, parametriDaPassare.length() - 1);
-        }
-        parametriDaPassare += ")";
-        if (parameters.length() < 3)
-            parametriDaPassare = parameters;
-
-        newMethodBody.append("variable." + metodoSplittato.getName() + parametriDaPassare + ";\n}");
-        String textToWrite = MethodMover.buildMethod(scope, returnType, name, parameters, throwsList, newMethodBody.toString());
-        MethodMover.methodWriter(textToWrite, metodoDaAggiornare, psiOriginalClass, true, project);
     }
 }

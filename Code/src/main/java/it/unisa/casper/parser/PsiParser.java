@@ -109,7 +109,7 @@ public class PsiParser implements Parser {
     }
 
     private void methosAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, MethodBean methodBean) {
-       /*
+/*
         //ANALISI STORICA
         //feature envy
         HistoryFeatureEnvyStrategy historyFeatureEnvyStrategy = new HistoryFeatureEnvyStrategy(projectPackages);
@@ -123,8 +123,8 @@ public class PsiParser implements Parser {
         StructuralFeatureEnvyStrategy structuralFeatureEnvyStrategy = new StructuralFeatureEnvyStrategy(projectPackages, dipendence.get("dipFeature"));
         FeatureEnvyCodeSmell sFeatureEnvyCodeSmell = new FeatureEnvyCodeSmell(structuralFeatureEnvyStrategy, "Structural");
         methodBean.isAffected(sFeatureEnvyCodeSmell);
-        */
 
+*/
     }
 
     private void classAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, ClassBean classBean) {
@@ -142,22 +142,21 @@ public class PsiParser implements Parser {
         HistoryShotgunSurgeryStrategy historyShotgunSurgeryStrategy = new HistoryShotgunSurgeryStrategy(projectPackages);
         ShotgunSurgeryCodeSmell shotgunSurgeryCodeSmell = new ShotgunSurgeryCodeSmell(historyShotgunSurgeryStrategy, "History");
         classBean.isAffected(shotgunSurgeryCodeSmell);
-        */
+
 
 
         //Divergent change
         HistoryDivergentChangeStrategy historyDivergentChangeStrategy = new HistoryDivergentChangeStrategy();
         DivergentChangeCodeSmell divergentChangeCodeSmell = new DivergentChangeCodeSmell(historyDivergentChangeStrategy, "History");
         classBean.isAffected(divergentChangeCodeSmell);
-
+*/
 
 
         //Parallel Inheritance
-        /*
         HistoryParallelInheritanceStrategy historyParallelInheritanceStrategy = new HistoryParallelInheritanceStrategy(projectPackages);
         ParallelInheritanceCodeSmell parallelInheritanceCodeSmell = new ParallelInheritanceCodeSmell(historyParallelInheritanceStrategy, "History");
         classBean.isAffected(parallelInheritanceCodeSmell);
-
+/*
 
         TextualBlobStrategy textualBlobStrategy = new TextualBlobStrategy(coseno.get("cosenoBlob"));
         BlobCodeSmell tBlobCodeSmell = new BlobCodeSmell(textualBlobStrategy, "Textual");
@@ -175,11 +174,12 @@ public class PsiParser implements Parser {
         classBean.isAffected(sMisplacedClassCodeSmell);
         classBean.setSimilarity(0);
         */
+
     }
 
     private void packageAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, PackageBean packageBean) {
-      /*
 
+/*
         TextualPromiscuousPackageStrategy textualPromiscuousPackageStrategy = new TextualPromiscuousPackageStrategy(coseno.get("cosenoPromiscuous"));
         PromiscuousPackageCodeSmell tPromiscuousPackagecodeSmell = new PromiscuousPackageCodeSmell(textualPromiscuousPackageStrategy, "Textual");
         packageBean.isAffected(tPromiscuousPackagecodeSmell);
@@ -189,8 +189,8 @@ public class PsiParser implements Parser {
         PromiscuousPackageCodeSmell sPromiscuousPackagecodeSmell = new PromiscuousPackageCodeSmell(structuralPromiscuousPackageStrategy, "Structural");
         packageBean.isAffected(sPromiscuousPackagecodeSmell);
         packageBean.setSimilarity(0);
+*/
 
-        */
 
     }
 

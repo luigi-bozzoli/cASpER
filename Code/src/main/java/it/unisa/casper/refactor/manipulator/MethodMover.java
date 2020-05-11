@@ -1,5 +1,6 @@
 package it.unisa.casper.refactor.manipulator;
 
+import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import it.unisa.casper.refactor.exceptions.FeatureEnvyException;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class MethodMover {
 
-    //Variabili di istanza
+
     private MethodBean methodToMove;
     //PSI Section
     private PsiClass psiSourceClass, psiDestinationClass;
@@ -83,9 +84,13 @@ public class MethodMover {
         PsiMethod newMethod = elementFactory.createMethodFromText(methodToWrite, writePlace);
 
         if (replace) {
-            actualPsiMethod.replace(newMethod);
+            WriteCommandAction.runWriteCommandAction(project, () -> {
+                actualPsiMethod.replace(newMethod);
+            });
         } else {
-            writePlace.add(newMethod);
+            WriteCommandAction.runWriteCommandAction(project, () -> {
+                writePlace.add(newMethod);
+            });
         }
     }
 
@@ -260,7 +265,7 @@ public class MethodMover {
 
             applySolutionBelonging(othervariables, s);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

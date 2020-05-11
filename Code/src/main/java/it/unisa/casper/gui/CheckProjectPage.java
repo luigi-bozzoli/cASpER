@@ -235,7 +235,6 @@ public class CheckProjectPage extends DialogWrapper {
             smellPanel.get(i).add(algo.get(i));
             algo.get(i).setLayout(new GridLayout(0, 1, 0, 0));
 
-            /*
             if(smellName.get(i).equalsIgnoreCase("Divergent Change") || smellName.get(i).equalsIgnoreCase("Shotgun Surgery") || smellName.get(i).equalsIgnoreCase("Parallel Inheritance") ){
 
                 algoritmi.put("history"+smellName.get(i).substring(0,1), new JCheckBox("History"));
@@ -253,16 +252,17 @@ public class CheckProjectPage extends DialogWrapper {
                     algo.get(i).add(algoritmi.get("history"+smellName.get(i).substring(0,1)));
 
                 }
+
             if(smellName.get(i).equalsIgnoreCase("Promiscuous Package") || smellName.get(i).equalsIgnoreCase("Misplaced Class")){
                     algoritmi.put("textual" + smellName.get(i).substring(0, 1), new JCheckBox("Textual"));
                     algo.get(i).add(algoritmi.get("textual" + smellName.get(i).substring(0, 1)));
                     algoritmi.put("structural" + smellName.get(i).substring(0, 1), new JCheckBox("Structural"));
                     algo.get(i).add(algoritmi.get("structural" + smellName.get(i).substring(0, 1)));
                 }
-            */
 
 
 
+/*
             algoritmi.put("textual" + smellName.get(i).substring(0, 1), new JCheckBox("Textual"));
             algo.get(i).add(algoritmi.get("textual" + smellName.get(i).substring(0, 1)));
             algoritmi.put("structural" + smellName.get(i).substring(0, 1), new JCheckBox("Structural"));
@@ -270,7 +270,7 @@ public class CheckProjectPage extends DialogWrapper {
             //History
             algoritmi.put("history" + smellName.get(i).substring(0,1), new JCheckBox("History"));
             algo.get(i).add(algoritmi.get("history" + smellName.get(i).substring(0,1)));
-
+*/
         }
 
         for (JCheckBox c : codeSmell.values()) {
@@ -621,7 +621,7 @@ public class CheckProjectPage extends DialogWrapper {
                     if (whereToSearch.equalsIgnoreCase("Parallel Inheritance")) {
                         for (ClassBean c : parallelInheritanceList) {
                             if (c.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
-                                DialogWrapper parallelInheritance = new ParallelInheritancePage(c, currentProject);
+                                DialogWrapper parallelInheritance = new ParallelInheritancePage(c, currentProject, packages);
                                 parallelInheritance.show();
                             }
                         }
@@ -746,7 +746,7 @@ public class CheckProjectPage extends DialogWrapper {
                 tableItem = new Vector<String>();
 
                 HashMap<String, Double> listThreschold = smell.getIndex();
-                if (algoritmi.get("textual" + codeSmell.substring(0, 1)).isSelected() && listThreschold.get("coseno") != null) {
+                if (  algoritmi.get("textual" + codeSmell.substring(0, 1)) != null  && algoritmi.get("textual" + codeSmell.substring(0, 1)).isSelected() && listThreschold.get("coseno") != null) {
                     if (used.equalsIgnoreCase("textual") && Double.parseDouble(valCoseno.getText()) <= listThreschold.get("coseno")) {
                         complessita++;
                         if (cos >= sogliaCoseno + (sogliaCoseno * 0.10)) {
