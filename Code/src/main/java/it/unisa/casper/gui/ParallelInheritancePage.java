@@ -48,8 +48,8 @@ public class ParallelInheritancePage  extends DialogWrapper {
         radarmaps.setLayout(new GridLayout(0, 2));
 
         radars = new RadarMapUtilsAdapter();
-        JPanel firstClassMap = radars.createRadarMapFromClassBean(parallelIheritanceClass, parallelIheritanceClass.getFullQualifiedName());
-        JPanel secondClassMap = radars.createRadarMapFromClassBean(parallelIheritanceClass.getParallelInheritanceClass(), parallelIheritanceClass.getParallelInheritanceClass().getFullQualifiedName());
+        JPanel firstClassMap = radars.createRadarMapFromClassBean(superClass1, superClass1.getFullQualifiedName());
+        JPanel secondClassMap = radars.createRadarMapFromClassBean(superClass2, superClass2.getFullQualifiedName());
         firstClassMap.setSize(200, 200);
         secondClassMap.setSize(200,200);
         radarmaps.add(firstClassMap);
@@ -58,7 +58,7 @@ public class ParallelInheritancePage  extends DialogWrapper {
 
         JPanel sx = new JPanel();
         JPanel dx = new JPanel();
-        sx.setBorder(new TitledBorder("CLASSE: "+getClassName(this.parallelIheritanceClass)));
+        sx.setBorder(new TitledBorder("CLASSE: "+getClassName(superClass1)));
 
 
         sx.setLayout(new BoxLayout(sx, BoxLayout.Y_AXIS));
@@ -66,14 +66,14 @@ public class ParallelInheritancePage  extends DialogWrapper {
 
 
         ClassBean c = parallelIheritanceClass.getParallelInheritanceClass();
-        dx.setBorder(new TitledBorder("CLASSE: "+getClassName(c)));
+        dx.setBorder(new TitledBorder("CLASSE: "+getClassName(superClass2)));
 
         JPanel pannelloClasse1 = new JPanel();
         pannelloClasse1.setLayout(new BorderLayout());
         JTextPane contenutoClasse1 = new JTextPane();
         contenutoClasse1.setLayout(new BorderLayout());
         src.main.java.it.unisa.casper.gui.StyleText generator1 = new src.main.java.it.unisa.casper.gui.StyleText();
-        contenutoClasse1.setStyledDocument(generator1.createDocument(this.parallelIheritanceClass.getTextContent()));
+        contenutoClasse1.setStyledDocument(generator1.createDocument(superClass1.getTextContent()));
         sx.add(contenutoClasse1);
 
         JPanel pannelloClasse2 = new JPanel();
@@ -81,7 +81,7 @@ public class ParallelInheritancePage  extends DialogWrapper {
         JTextPane contenutoClasse2 = new JTextPane();
         contenutoClasse2.setLayout(new BorderLayout());
         src.main.java.it.unisa.casper.gui.StyleText generator2 = new src.main.java.it.unisa.casper.gui.StyleText();
-        contenutoClasse2.setStyledDocument(generator2.createDocument(c.getTextContent()));
+        contenutoClasse2.setStyledDocument(generator2.createDocument(superClass2.getTextContent()));
         dx.add(contenutoClasse2);
 
         mainPanel.add(sx);
@@ -104,14 +104,9 @@ public class ParallelInheritancePage  extends DialogWrapper {
 
             @Override
             protected void doAction(ActionEvent actionEvent) {
-                //FieldMover fieldMover = new FieldMover(superClass1, parallelIheritanceClass, parallelIheritanceClass.getInstanceVariablesList() , project);
-               // fieldMover.MoveField();
-                RefactoringManager r = new RefactoringManager(new ParallelInheritanceStrategy(superClass1, parallelIheritanceClass, project));
-               try {
-                   r.executeRefactor();
-               }catch (Exception e){
-                   e.printStackTrace();
-               }
+                ParallelInheritanceWizard parallelInheritanceWizard = new ParallelInheritanceWizard(superClass1, superClass2, project);
+                parallelInheritanceWizard.show();
+                close(0);
             }
         };
         return new Action[]{okAction, new DialogWrapperExitAction("CANCEL", 0)};

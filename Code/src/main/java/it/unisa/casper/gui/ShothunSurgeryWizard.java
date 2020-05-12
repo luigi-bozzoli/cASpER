@@ -51,7 +51,7 @@ public class ShothunSurgeryWizard extends DialogWrapper {
         radarmaps.setLayout(new GridLayout(0, 2));
 
         radars = new RadarMapUtilsAdapter();
-        JPanel oldClassRadarMap = radars.createRadarMapFromClassBean(classeAffetta, "Divergent Change Old Class");
+        JPanel oldClassRadarMap = radars.createRadarMapFromClassBean(classeAffetta, "Old Class");
         JPanel newClassRadarMap = radars.createRadarMapFromClassBean(new ClassBean.Builder(classeAffetta.getFullQualifiedName(), generaTextContent()).build(), "New Class");
         oldClassRadarMap.setSize(200,200);
         newClassRadarMap.setSize(200,200);
@@ -133,13 +133,6 @@ public class ShothunSurgeryWizard extends DialogWrapper {
                 } else {
                     message = "Move method refactoring correctly executed.\nCheck the imports in the manipulated classes.";
                     icon = Messages.getInformationIcon();
-
-                    /*try {
-                        FileWriter f = new FileWriter(System.getProperty("user.home") + File.separator + ".casper" + File.separator + "refactoring.txt");
-                        BufferedWriter out = new BufferedWriter(f);
-                        out.write(textAreaContent.toString());
-                    } catch (IOException e) {
-                    }*/
                 }
 
                 Messages.showMessageDialog(message, "Outcome of refactoring", icon);

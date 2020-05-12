@@ -72,11 +72,11 @@ public class FieldMover{
                     returnType = psiMethod.getReturnType().getPresentableText();
                     name = psiMethod.getName();
                     parameters = psiMethod.getParameterList().getText();
-                    parameters = parameters.substring(0, parameters.length() - 1);
+                   /* parameters = parameters.substring(0, parameters.length() - 1);
                     if (parameters.length() > 1) {
                         parameters = parameters + ", ";
                     }
-                    parameters = parameters + instanceVariableBean.getType() + " " + newName + ")";
+                    parameters = parameters + instanceVariableBean.getType() + " " + newName + ")";*/
                     throwsList = psiMethod.getThrowsList().getText();
                     body = psiMethod.getBody().getText();
                     body = body.replaceAll(oldName, newName);
