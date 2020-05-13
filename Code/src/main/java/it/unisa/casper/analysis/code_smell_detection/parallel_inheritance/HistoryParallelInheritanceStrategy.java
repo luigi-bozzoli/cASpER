@@ -108,7 +108,8 @@ public class HistoryParallelInheritanceStrategy implements ClassSmellDetectionSt
                 }
             }
 
-            this.threshold = Double.parseDouble(list[list.length - 1]);
+            ClassBean superClass = getSuperClassBean(aClass.getSuperclass());
+            this.threshold = superClass.getMethodList().size() + superClass.getInstanceVariablesList().size();
             return true;
         }else{
             this.threshold = 0;
@@ -120,5 +121,16 @@ public class HistoryParallelInheritanceStrategy implements ClassSmellDetectionSt
         String[] tmpArray = classBean.getFullQualifiedName().split("\\.");
         String tmp = tmpArray[tmpArray.length-1] + ".java";
         return tmp;
+    }
+
+    private ClassBean getSuperClassBean(String name){
+        for(PackageBean p : systemPackages){
+            for(ClassBean c : p.getClassList()){
+                if(c.getFullQualifiedName().equalsIgnoreCase(name)){
+                    return c;
+                }
+            }
+        }
+        return null;
     }
 }

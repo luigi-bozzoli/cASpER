@@ -94,6 +94,7 @@ public class ConfigureThreshold extends DialogWrapper {
         algorith.addItem("All");
         algorith.addItem("Textual");
         algorith.addItem("Structural");
+        algorith.addItem("History");
         algorith.setSelectedIndex(0);
         JPanel contentPane = new JPanel();
         contentPane.setPreferredSize(new Dimension(1200, 600));

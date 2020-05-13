@@ -1,11 +1,15 @@
 package it.unisa.casper.analysis.history_analysis_utility;
 
+import it.unisa.casper.analysis.code_smell.CodeSmell;
 import it.unisa.casper.analysis.code_smell.FeatureEnvyCodeSmell;
+import it.unisa.casper.storage.beans.ClassBean;
+import org.apache.xmlbeans.impl.xb.ltgfmt.Code;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class HistoryAnalysisStartup {
 
@@ -59,6 +63,118 @@ public class HistoryAnalysisStartup {
 
     public String getDir() {
         return dir;
+    }
+
+    public static String historyPriority(CodeSmell codeSmell){
+            switch (codeSmell.getSmellName()) {
+                case "Blob":
+                    return blobPriority(codeSmell);
+                case "Feature Envy":
+                    return getFeatureEnvyPriority(codeSmell);
+                case "Divergent Change":
+                    return divergentChangePriority(codeSmell);
+                case "Shotgun Surgery":
+                    return shotgunSurgeryPriority(codeSmell);
+                case "Parallel Inheritance":
+                    return getParallelInheritancePriority(codeSmell);
+            }
+
+        return "";
+    }
+
+    private static String getFeatureEnvyPriority(CodeSmell codeSmell){
+        HashMap<String, Double> threshold = codeSmell.getIndex();
+        Double value = threshold.get("threshold");
+
+        if(value > 0 && value <= 5){
+            return "low";
+        }else{
+            if(value > 5 && value <= 10 ){
+                return "medium";
+            }else{
+                if(value > 15 && value <= 20){
+                    return "high";
+                }else{
+                    return "urgent";
+                }
+            }
+        }
+    }
+
+    private static String getParallelInheritancePriority(CodeSmell codeSmell){
+        HashMap<String, Double> threshold = codeSmell.getIndex();
+        Double value = threshold.get("threshold");
+
+        if(value > 0 && value <= 20){
+            return "low";
+        }else{
+            if(value > 20 && value <= 30 ){
+                return "medium";
+            }else{
+                if(value > 30 && value <= 40){
+                    return "high";
+                }else{
+                    return "urgent";
+                }
+            }
+        }
+    }
+
+    private static String shotgunSurgeryPriority(CodeSmell codeSmell){
+        HashMap<String, Double> threshold = codeSmell.getIndex();
+        Double value = threshold.get("threshold");
+
+        if(value > 0 && value <= 2){
+            return "low";
+        }else{
+            if(value > 2 && value <= 4 ){
+                return "medium";
+            }else{
+                if(value > 4 && value <= 6){
+                    return "high";
+                }else{
+                    return "urgent";
+                }
+            }
+        }
+    }
+
+    private static String divergentChangePriority(CodeSmell codeSmell){
+        HashMap<String, Double> threshold = codeSmell.getIndex();
+        Double value = threshold.get("threshold");
+
+        if(value > 0 && value <= 2){
+            return "low";
+        }else{
+            if(value > 2 && value <= 4 ){
+                return "medium";
+            }else{
+                if(value > 4 && value <= 6){
+                    return "high";
+                }else{
+                    return "urgent";
+                }
+            }
+        }
+    }
+
+    private static String blobPriority(CodeSmell codeSmell){
+        HashMap<String, Double> threshold = codeSmell.getIndex();
+        Double value = threshold.get("threshold") - 8;
+
+        if(value >= 0 && value <= 2){
+            return "low";
+        }else{
+            if(value > 2 && value <= 10 ){
+                return "medium";
+            }else{
+                if(value > 10 && value <= 15){
+                    return "high";
+                }else{
+                    return "urgent";
+                }
+            }
+        }
     }
 
     private static final String PARALLEL_INHERITANCE_DETECTION = "from pydriller import RepositoryMining\n" +
@@ -115,7 +231,7 @@ public class HistoryAnalysisStartup {
             "\n" +
             "\n" +
             "if checkBool:\n" +
-            "    print('true'+ ',' + result + str(1))\n" +
+            "    print('true'+ ',' + result + str(2))\n" +
             "else:\n" +
             "    print ('false')";
 

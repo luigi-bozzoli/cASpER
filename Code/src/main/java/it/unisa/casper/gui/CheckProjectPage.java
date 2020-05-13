@@ -5,6 +5,7 @@ import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.ui.table.JBTable;
 import it.unisa.casper.analysis.code_smell.CodeSmell;
+import it.unisa.casper.analysis.history_analysis_utility.HistoryAnalysisStartup;
 import it.unisa.casper.storage.beans.ClassBean;
 import it.unisa.casper.storage.beans.MethodBean;
 import it.unisa.casper.storage.beans.PackageBean;
@@ -879,7 +880,7 @@ public class CheckProjectPage extends DialogWrapper {
                     tableItem.add("---");
                     tableItem.add("---");
                     tableItem.add(""+threshold.get("threshold"));
-                    tableItem.add("Priority");
+                    tableItem.add(HistoryAnalysisStartup.historyPriority(smell));
                     model.addRow(tableItem);
                 }
             }
