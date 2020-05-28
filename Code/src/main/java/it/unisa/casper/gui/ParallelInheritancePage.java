@@ -6,6 +6,7 @@ import it.unisa.casper.gui.radarMap.RadarMapUtils;
 import it.unisa.casper.gui.radarMap.RadarMapUtilsAdapter;
 import it.unisa.casper.refactor.manipulator.FieldMover;
 import it.unisa.casper.refactor.manipulator.ParallelInheritanceStrategy;
+import it.unisa.casper.refactor.manipulator.UpdateClassUtility;
 import it.unisa.casper.refactor.strategy.RefactoringManager;
 import it.unisa.casper.storage.beans.*;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +16,8 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class ParallelInheritancePage  extends DialogWrapper {
@@ -104,7 +107,11 @@ public class ParallelInheritancePage  extends DialogWrapper {
 
             @Override
             protected void doAction(ActionEvent actionEvent) {
-                ParallelInheritanceWizard parallelInheritanceWizard = new ParallelInheritanceWizard(superClass1, superClass2, project);
+
+
+
+
+                ParallelInheritanceWizard parallelInheritanceWizard = new ParallelInheritanceWizard(superClass1, superClass2, project, packageBeans);
                 parallelInheritanceWizard.show();
                 close(0);
             }
@@ -122,6 +129,7 @@ public class ParallelInheritancePage  extends DialogWrapper {
         }
         return null;
     }
+
 
     private String getClassName(ClassBean classBean){
         String[] tmpArray = classBean.getFullQualifiedName().split("\\.");

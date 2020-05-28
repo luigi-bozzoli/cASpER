@@ -6,7 +6,10 @@ import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.JBUI;
 import it.unisa.casper.gui.radarMap.RadarMapUtils;
 import it.unisa.casper.gui.radarMap.RadarMapUtilsAdapter;
+import it.unisa.casper.refactor.manipulator.UpdateClassUtility;
+import it.unisa.casper.storage.beans.ClassBean;
 import it.unisa.casper.storage.beans.MethodBean;
+import it.unisa.casper.storage.beans.PackageBean;
 import it.unisa.casper.structuralMetrics.CKMetrics;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,12 +21,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.Vector;
 
 public class FeatureEnvyPage extends DialogWrapper {
 
     private Project project;
     private MethodBean featureEnvyBean;
+    private List<PackageBean> packageBeans;
     private JPanel centerPanel;
     private JPanel radarmapContainer;
     private JPanel methodRadarmapContainer;
@@ -38,10 +43,11 @@ public class FeatureEnvyPage extends DialogWrapper {
         super(canBeParent);
     }
 
-    public FeatureEnvyPage(MethodBean featureEnvyBean, Project project) {
+    public FeatureEnvyPage(MethodBean featureEnvyBean, Project project, List<PackageBean> systemPackages) {
         super(true);
         this.featureEnvyBean = featureEnvyBean;
         this.project = project;
+        this.packageBeans = systemPackages;
         this.radarMapGenerator = new RadarMapUtilsAdapter();
         setResizable(false);
         init();
@@ -139,7 +145,7 @@ public class FeatureEnvyPage extends DialogWrapper {
 
             @Override
             protected void doAction(ActionEvent actionEvent) {
-                FeatureEnvyWizard featureEnvyWizard = new FeatureEnvyWizard(featureEnvyBean, project);
+                FeatureEnvyWizard featureEnvyWizard = new FeatureEnvyWizard(featureEnvyBean, project, packageBeans);
                 featureEnvyWizard.show();
                 close(0);
             }

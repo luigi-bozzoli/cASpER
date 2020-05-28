@@ -32,7 +32,12 @@ public class DivergentChangeRefactoringStrategy implements RefactoringStrategy {
     @Override
     public void doRefactor() throws RefactorException {
 
-
+        List<MethodBean> listaMetodi = originalClass.getMethodList();
+        for(ClassBean c : splittedList){
+            for(MethodBean m : c.getMethodList()){
+                listaMetodi.remove(m);
+            }
+        }
 
 
         String pathClass = originalClass.getPathToFile();
@@ -74,5 +79,17 @@ public class DivergentChangeRefactoringStrategy implements RefactoringStrategy {
             }
         }
 
+        Boolean bool = true;
+        for(MethodBean m : listaMetodi){
+            if(!m.getDefaultCostructor()){
+                bool = bool && true;
+            }else{
+                bool = bool && false;
+            }
+        }
+
+        if(bool){
+            UpdateClassUtility.deleteClassFile(originalClass);
+        }
     }
 }

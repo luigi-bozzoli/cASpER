@@ -3,6 +3,7 @@ package it.unisa.casper.refactor.manipulator;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
+import com.intellij.util.ui.update.Update;
 import it.unisa.casper.refactor.exceptions.FeatureEnvyException;
 import it.unisa.casper.refactor.exceptions.RefactorException;
 import it.unisa.casper.storage.beans.ClassBean;
@@ -16,6 +17,7 @@ public class MethodMover {
 
 
     private MethodBean methodToMove;
+    private ClassBean destinationClass;
     //PSI Section
     private PsiClass psiSourceClass, psiDestinationClass;
     private PsiMethod psiMethod;
@@ -31,6 +33,7 @@ public class MethodMover {
     public MethodMover(MethodBean methodToMove, ClassBean destinationClass, Project project){
         this.project = project;
         this.methodToMove = methodToMove;
+        this.destinationClass = destinationClass;
         psiMethod = PsiUtil.getPsi(methodToMove, project);
         psiSourceClass = PsiUtil.getPsi(methodToMove.getBelongingClass(), project);
         psiDestinationClass = PsiUtil.getPsi(destinationClass, project);
@@ -126,6 +129,8 @@ public class MethodMover {
         } else {
             throw new RefactorException("Extract methods application is required.\nThis type of refactoring is not yet possible");
         }
+
+       // UpdateClassUtility.addImport(destinationClass, methodToMove.getBelongingClass());
 
     }
 

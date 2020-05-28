@@ -32,6 +32,11 @@ public class ShotgunSurgeryRefactoringStrategy implements RefactoringStrategy {
                     mover.moveMethod();
                 }
             }
+
+            UpdateClassUtility.addImport(affectedClass, c);
         }
+
+
+
     }
 }

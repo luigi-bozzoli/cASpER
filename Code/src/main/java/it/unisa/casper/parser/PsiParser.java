@@ -112,9 +112,11 @@ public class PsiParser implements Parser {
 
         //ANALISI STORICA
         //feature envy
+
         HistoryFeatureEnvyStrategy historyFeatureEnvyStrategy = new HistoryFeatureEnvyStrategy(projectPackages);
         FeatureEnvyCodeSmell hFeatureEnvyCodeSmell = new FeatureEnvyCodeSmell(historyFeatureEnvyStrategy, "History");
         methodBean.isAffected(hFeatureEnvyCodeSmell);
+
 
         TextualFeatureEnvyStrategy textualFeatureEnvyStrategy = new TextualFeatureEnvyStrategy(projectPackages, coseno.get("cosenoFeature"));
         FeatureEnvyCodeSmell tFeatureEnvyCodeSmell = new FeatureEnvyCodeSmell(textualFeatureEnvyStrategy, "Textual");
@@ -129,7 +131,7 @@ public class PsiParser implements Parser {
     private void classAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, ClassBean classBean) {
         //ANALISI STORICA
         //blob
-        HistoryBlobStrategy historyBlobStrategy = new HistoryBlobStrategy();
+       HistoryBlobStrategy historyBlobStrategy = new HistoryBlobStrategy();
         BlobCodeSmell hBlobCodeSmell = new BlobCodeSmell(historyBlobStrategy, "History");
         Thread t = new Thread(new AnalyzerThread(classBean, hBlobCodeSmell));
         threadList.add(t);
@@ -172,7 +174,6 @@ public class PsiParser implements Parser {
         classBean.isAffected(sMisplacedClassCodeSmell);
         classBean.setSimilarity(0);
 
-
     }
 
     private void packageAnalysis(HashMap<String, Double> coseno, HashMap<String, Integer> dipendence, PackageBean packageBean) {
@@ -187,8 +188,6 @@ public class PsiParser implements Parser {
         PromiscuousPackageCodeSmell sPromiscuousPackagecodeSmell = new PromiscuousPackageCodeSmell(structuralPromiscuousPackageStrategy, "Structural");
         packageBean.isAffected(sPromiscuousPackagecodeSmell);
         packageBean.setSimilarity(0);
-
-
 
     }
 

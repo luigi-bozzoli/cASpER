@@ -8,10 +8,12 @@ import it.unisa.casper.gui.radarMap.RadarMapUtils;
 import it.unisa.casper.gui.radarMap.RadarMapUtilsAdapter;
 import it.unisa.casper.refactor.manipulator.ParallelInheritanceStrategy;
 import it.unisa.casper.refactor.manipulator.ShotgunSurgeryRefactoringStrategy;
+import it.unisa.casper.refactor.manipulator.UpdateClassUtility;
 import it.unisa.casper.refactor.strategy.RefactoringManager;
 import it.unisa.casper.storage.beans.ClassBean;
 import it.unisa.casper.storage.beans.InstanceVariableBean;
 import it.unisa.casper.storage.beans.MethodBean;
+import it.unisa.casper.storage.beans.PackageBean;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,6 +23,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ParallelInheritanceWizard  extends DialogWrapper {
 
@@ -30,10 +33,12 @@ public class ParallelInheritanceWizard  extends DialogWrapper {
     private boolean errorOccurred;
     private RadarMapUtils radars;
     private JPanel radarmaps;
+    private List<PackageBean> packageBeans;
 
-    protected ParallelInheritanceWizard(ClassBean super1, ClassBean super2, @Nullable Project project) {
+    protected ParallelInheritanceWizard(ClassBean super1, ClassBean super2, @Nullable Project project,List<PackageBean> systemPackages) {
         super(true);
         this.project = project;
+        this.packageBeans = systemPackages;
         this.super1 = super1;
         this.super2 = super2;
         this.errorOccurred = false;
@@ -144,17 +149,33 @@ public class ParallelInheritanceWizard  extends DialogWrapper {
             @Override
             protected void doAction(ActionEvent actionEvent) {
 
-                ParallelInheritanceStrategy parallelInheritanceStrategy = new ParallelInheritanceStrategy(super1, super2, project);
+                ParallelInheritanceStrategy parallelInheritanceStrategy = new ParallelInheritanceStrategy(super1, super2, project, packageBeans);
                 RefactoringManager refactoringManager = new RefactoringManager(parallelInheritanceStrategy);
 
-                WriteCommandAction.runWriteCommandAction(project, () -> {
+                //WriteCommandAction.runWriteCommandAction(project, () -> {
                     try {
                         refactoringManager.executeRefactor();
                     } catch (Exception e) {
+                        e.printStackTrace();
                         errorOccurred = true;
                         message = e.getMessage();
                     }
-                });
+               // });
+
+                for (PackageBean p : packageBeans) {
+                    System.out.println("PACKAGE: " + p.getFullQualifiedName());
+                    for (ClassBean c : p.getClassList()) {
+                        System.out.println("CLASSE: " + c.getFullQualifiedName());
+                        if (c.getSuperclass().equalsIgnoreCase(super2.getFullQualifiedName())) {
+                            System.out.println("IF TRUE");
+                            UpdateClassUtility.modifyExtend(c, super1);
+                        }
+                    }
+                }
+
+                UpdateClassUtility.deleteClassFile(super2);
+
+                System.out.println("BOH");
 
                 if (errorOccurred) {
                     icon = Messages.getErrorIcon();

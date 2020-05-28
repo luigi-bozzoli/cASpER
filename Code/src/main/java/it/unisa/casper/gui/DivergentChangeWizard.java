@@ -69,9 +69,11 @@ public class DivergentChangeWizard extends DialogWrapper {
         classeVecchia.setStyledDocument(generator.createDocument(textContentOld));
         sx.add(classeVecchia);
 
+        int k = 0;
         for(ClassBean c : splittedClasses){
+            k++;
             //Radar map
-            radarMap = radars.createRadarMapFromClassBean(c, "Divergent Change Class Topics");
+            radarMap = radars.createRadarMapFromClassBean(c, "New Class_" + k);
             radarMap.setSize(200,200);
             radarmaps.add(radarMap);
 
@@ -109,14 +111,14 @@ public class DivergentChangeWizard extends DialogWrapper {
                 DivergentChangeRefactoringStrategy divergentChangeRefactoringStrategy = new DivergentChangeRefactoringStrategy(classeAffetta, splittedClasses, project);
                 RefactoringManager refactoringManager = new RefactoringManager(divergentChangeRefactoringStrategy);
 
-              //  WriteCommandAction.runWriteCommandAction(project, () -> {
+                // WriteCommandAction.runWriteCommandAction(project, () -> {
                     try {
                         refactoringManager.executeRefactor();
                     } catch (Exception e) {
                         errorOccurred = true;
                         message = "Error during refactoring";
                     }
-            //    });
+              //  });
 
                 if (errorOccurred) {
                     icon = Messages.getErrorIcon();

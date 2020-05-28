@@ -8,9 +8,11 @@ import com.intellij.ui.components.JBScrollPane;
 import it.unisa.casper.gui.radarMap.RadarMapUtils;
 import it.unisa.casper.gui.radarMap.RadarMapUtilsAdapter;
 import it.unisa.casper.refactor.manipulator.FeatureEnvyRefactoringStrategy;
+import it.unisa.casper.refactor.manipulator.UpdateClassUtility;
 import it.unisa.casper.refactor.strategy.RefactoringManager;
 import it.unisa.casper.storage.beans.ClassBean;
 import it.unisa.casper.storage.beans.MethodBean;
+import it.unisa.casper.storage.beans.PackageBean;
 import it.unisa.casper.topic.TopicExtracter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,6 +26,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -31,6 +34,7 @@ import java.util.TreeMap;
 public class FeatureEnvyWizard extends DialogWrapper {
 
     private Project project;
+    private List<PackageBean> packageBeans;
     private MethodBean smellMethod;
     private JPanel radarmaps;
     private JPanel contentPanel;
@@ -44,12 +48,13 @@ public class FeatureEnvyWizard extends DialogWrapper {
     private static StringBuilder textAreaContent;
     private boolean errorOccurred;
 
-    public FeatureEnvyWizard(MethodBean smellMethod, Project project) {
+    public FeatureEnvyWizard(MethodBean smellMethod, Project project, List<PackageBean> systemPackages) {
         super(true);
         setResizable(false);
         this.smellMethod = smellMethod;
         this.project = project;
         this.errorOccurred = false;
+        this.packageBeans = systemPackages;
         init();
         setTitle("FEATURE ENVY REFACTORING");
     }
@@ -185,6 +190,20 @@ public class FeatureEnvyWizard extends DialogWrapper {
                 WriteCommandAction.runWriteCommandAction(project, () -> {
                     try {
                         refactoringManager.executeRefactor();
+
+                        ClassBean target = null;
+
+                        for(PackageBean p : packageBeans){
+                            for(ClassBean c : p.getClassList()){
+                                if(c.getFullQualifiedName().equalsIgnoreCase(smellMethod.getBelongingClass().getFullQualifiedName())){
+                                    target = c;
+                                }
+                            }
+                        }
+
+                        UpdateClassUtility.addImport(target, smellMethod.getEnviedClass());
+
+
                     } catch (Exception e) {
                         errorOccurred = true;
                         message = e.getMessage();

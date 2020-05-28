@@ -577,7 +577,7 @@ public class CheckProjectPage extends DialogWrapper {
                     if (whereToSearch.equalsIgnoreCase("feature envy")) {
                         for (MethodBean m : featureEnvyList) {
                             if (m.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
-                                DialogWrapper feat = new FeatureEnvyPage(m, currentProject);
+                                DialogWrapper feat = new FeatureEnvyPage(m, currentProject, packages);
                                 feat.show();
                             }
                         }
@@ -929,6 +929,8 @@ public class CheckProjectPage extends DialogWrapper {
                     for (MethodBean m : featureEnvyList) {
                         if (m.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
                             textContent = m.getTextContent();
+                            textContent = textContent + "\n\nThis method is envied by the class: " + m.getEnviedClass().getFullQualifiedName() + "\n";
+                            textContent = textContent + "\n" + m.getEnviedClass().getTextContent();
                         }
                     }
                 } else {
@@ -963,9 +965,9 @@ public class CheckProjectPage extends DialogWrapper {
                                 if(whereToSearch.equalsIgnoreCase("Shotgun Surgery")){
                                     for (ClassBean c : shotgunSurgeryList) {
                                         if (c.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
-                                            textContent = c.getTextContent() + "-------------------------------------------";
+                                            textContent = c.getTextContent() + "-------------------------------------------\n";
                                             for(ClassBean classe : c.getShotgunSurgeryHittedClasses()){
-                                                textContent = textContent + classe.getTextContent() + "-------------------------------------------";
+                                                textContent = textContent + classe.getTextContent() + "-------------------------------------------\n";
                                             }
 
                                         }
