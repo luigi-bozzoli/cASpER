@@ -36,8 +36,10 @@ public class ParallelInheritanceStrategy implements RefactoringStrategy {
         }
 
         for(MethodBean m : super2.getMethodList()) {
-            MethodMover methodMover = new MethodMover(m, super1, project);
-            methodMover.moveMethod();
+            if(m != null && super1 != null) {
+                MethodMover methodMover = new MethodMover(m, super1, project);
+                methodMover.moveMethod();
+            }
         }
 
 

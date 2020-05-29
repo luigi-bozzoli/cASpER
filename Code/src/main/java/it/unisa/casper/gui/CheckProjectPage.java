@@ -929,7 +929,7 @@ public class CheckProjectPage extends DialogWrapper {
                     for (MethodBean m : featureEnvyList) {
                         if (m.getFullQualifiedName().equalsIgnoreCase(whatToReturn)) {
                             textContent = m.getTextContent();
-                            textContent = textContent + "\n\nThis method is envied by the class: " + m.getEnviedClass().getFullQualifiedName() + "\n";
+                            textContent = textContent + "\n\nThis method envies the class: " + m.getEnviedClass().getFullQualifiedName() + "\n";
                             textContent = textContent + "\n" + m.getEnviedClass().getTextContent();
                         }
                     }
