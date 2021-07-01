@@ -1,5 +1,5 @@
 # cASpER
-Plugin for IntelliJ IDEA for the research and the automatic correction of code smells
+A Plug-in for Automated Code Smell Detection and Refactoring
 
 ## Languages and Tools
 + Java
