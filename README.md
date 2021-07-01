@@ -1,3 +1,13 @@
+# cASpER
+Plugin for IntelliJ IDEA for the research and the automatic correction of code smells
+
+## Languages and Tools
++ Java
++ Python
++ Intellij IDEA
++ PyCharm
+
+
 ## How to install manually
 
 To be able to install cASpER it is essential to have on your device:
@@ -23,3 +33,6 @@ If not present, it is also necessary to define the startup configuration to comp
 
   1. :runIde in the "task" chapter
   2. -stacktrace in the "arguments" field
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
